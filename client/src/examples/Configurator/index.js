@@ -27,7 +27,7 @@ import Icon from "@mui/material/Icon";
 import QuizIcon from "@mui/icons-material/Quiz";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import Thankyou from "assets/images/thank-you.gif";
-
+import axios from 'axios';
 // @mui icons
 // import TwitterIcon from "@mui/icons-material/Twitter";
 // import FacebookIcon from "@mui/icons-material/Facebook";
@@ -63,7 +63,7 @@ function Configurator() {
   } = controller;
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];
-
+  const [quote,setQuote] = useState({});
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
     // A function that sets the disabled state of the buttons for the sidenav type.
@@ -80,6 +80,14 @@ function Configurator() {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleDisabled);
   }, []);
+
+  useEffect(()=>{
+    axios.get('https://api.quotable.io/random')
+    .then((res)=>{
+      setQuote(res.data)
+      console.log(res.data)
+    })
+  },[])
 
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
   const handleTransparentSidenav = () => {
@@ -315,15 +323,20 @@ function Configurator() {
 
         <MDBox mt={2} textAlign="center">
           <MDBox mb={0.5}>
-            <MDTypography color="success" variant="h6">
-              Continue Your Dialogue!
+            <MDTypography color="success" variant="h4">
+              Quotes 
             </MDTypography>
           </MDBox>
         </MDBox>
-        <MDBox mt={2} textAlign="center">
+        <MDBox mt={2}>
           {/* <Grid container alignItems="center"> */}
           {/* <Grid item> */}
-          <MDBox component="img" src={Thankyou} alt="Thankyou" width="100%" mt={1} />
+          <MDTypography sx={{whiteSpace: "pre-wrap"}} mt={4} mb={2} variant="h6"  color="text">
+            {quote.content}
+          </MDTypography>
+          <MDTypography sx={{whiteSpace: "pre-wrap"}} mt={4} mb={2}  color="text">
+           - {quote.author}
+          </MDTypography>
           {/* </Grid> */}
           {/* </Grid> */}
         </MDBox>
