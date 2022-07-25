@@ -7,7 +7,7 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import man from "assets/images/man.jpg";
 import {loginUser} from 'actions/authAction';
 import {connect} from 'react-redux';
 
@@ -67,7 +67,7 @@ const Basic = function (props) {
   };
 
   return (
-    <BasicLayout image={bgImage}>
+    <BasicLayout image={man}>
       <Card>
         <MDBox
           variant="gradient"
