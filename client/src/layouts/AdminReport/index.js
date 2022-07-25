@@ -59,13 +59,13 @@ function AdminReport() {
       empname: empName,
       team: teamList,
     };
-    console.log(userData);
+    // console.log(userData);
 
     const sDate = values.startDate;
     const eDate = values.endDate;
     const name = empName;
     const  team  = teamList;
-    console.log(name !== "");
+    // console.log(name !== "");
     if(name==null&&team==null){
       axios.get('analyst/fetch/report/date/?sDate='+sDate+'&eDate='+eDate)
       .then((res)=>{
@@ -77,7 +77,7 @@ function AdminReport() {
       axios
         .get(`analyst/fetch/report/team/?sDate=${sDate}&eDate=${eDate}&team=${team}`)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setReport(res.data);
         })
         .catch((err) => console.log(`Error:${err}`));
@@ -85,7 +85,7 @@ function AdminReport() {
       axios
         .get(`analyst/fetch/report/user/?sDate=${sDate}&eDate=${eDate}&name=${name}`)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setReport(res.data);
         })
         .catch((err) => console.log(`Error:${err}`));
@@ -93,7 +93,7 @@ function AdminReport() {
       axios
         .get(`analyst/fetch/report/?sDate=${sDate}&eDate=${eDate}&name=${name}&team=${team}`)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           setReport(res.data);
         })
         .catch((err) => console.log(`Error:${err}`));
@@ -108,7 +108,7 @@ function AdminReport() {
     axios.get("authentication/user/users").then((res) => {
       setName(res.data);
     });
-    console.log(name);
+    // console.log(name);
   };
 
   // tabel report
@@ -210,7 +210,7 @@ function AdminReport() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Grid item xs={12} mt={1} mb={40}>
+      <Grid item xs={12} mt={1} mb={10}>
         <Card>
           <MDBox component="form" role="form" onSubmit={handleSubmit}>
             <MDBox

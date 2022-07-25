@@ -40,7 +40,7 @@ function App() {
   } = controller;
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
   const role = useSelector(state=>state.auth.user.role);
-  console.log(role);
+  // console.log(role);
   useEffect(() => {
     if (localStorage.jwtToken) {
       // Set auth token header auth

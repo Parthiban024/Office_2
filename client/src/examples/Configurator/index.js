@@ -81,14 +81,16 @@ function Configurator() {
     return () => window.removeEventListener("resize", handleDisabled);
   }, []);
 
-  useEffect(()=>{
+  const quotes = () =>{
     axios.get('https://api.quotable.io/random')
     .then((res)=>{
       setQuote(res.data)
       console.log(res.data)
     })
+  }
+  useEffect(()=>{
+    quotes();
   },[])
-
   const handleCloseConfigurator = () => setOpenConfigurator(dispatch, false);
   const handleTransparentSidenav = () => {
     setTransparentSidenav(dispatch, true);
@@ -326,21 +328,19 @@ function Configurator() {
             <MDTypography color="success" variant="h4">
               Quotes 
             </MDTypography>
-          </MDBox>
-        </MDBox>
-        <MDBox mt={2}>
+          </MDBox></MDBox>
+          <MDBox mt={2} display="flex" flexDirection="column">
           {/* <Grid container alignItems="center"> */}
           {/* <Grid item> */}
-          <MDTypography sx={{whiteSpace: "pre-wrap"}} mt={4} mb={2} variant="h6"  color="text">
+         <MDTypography sx={{whiteSpace: "pre-wrap"}} mt={4} mb={2} variant="h6"  color="text">
             {quote.content}
-          </MDTypography>
-          <MDTypography sx={{whiteSpace: "pre-wrap"}} mt={4} mb={2}  color="text">
+         <br/>
            - {quote.author}
           </MDTypography>
           {/* </Grid> */}
           {/* </Grid> */}
         </MDBox>
-
+        
         <MDBox display="flex" justifyContent="center">
           <MDBox mr={1.5}>
             <MDButton

@@ -84,7 +84,7 @@ function Cover(props) {
       password: values.password,
       password2: values.cpassword,
     };
-    console.log(userData);
+    // console.log(userData);
     props.registerUser(userData);
 
     // toast.success("oK")

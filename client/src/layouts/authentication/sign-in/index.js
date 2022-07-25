@@ -53,7 +53,7 @@ const Basic = function (props) {
     if(err.email||err.emailIncorrect && err.password||err.passwordIncorrect !==''){
       setRed(true)
     }
-    console.log(err)
+    // console.log(err)
   },[props.errors])
 
   const handleSubmit = (e) => {
@@ -62,7 +62,7 @@ const Basic = function (props) {
       email: values.email,
       password: values.password,
     };
-    console.log(userData);
+    // console.log(userData);
     props.loginUser(userData);
   };
 

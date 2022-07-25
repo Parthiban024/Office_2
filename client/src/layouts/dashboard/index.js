@@ -47,8 +47,8 @@ function Dashboard() {
   // file handling
   const handlingFileUpload = (e) => {
     const { files } = e.target;
-    console.log(files);
-    console.log(files[0]);
+    // console.log(files);
+    // console.log(files[0]);
     papa.parse(files[0], {
       header: true,
       column: true,
@@ -77,7 +77,7 @@ function Dashboard() {
       .then(() => toast.success("Successfully Data Submitted 👌"))
       .catch((err) => toast.error(`Try Again Followed Error Acquired: ${err}☹️`));
 
-    console.log(userData);
+    // console.log(userData);
   };
 
   useEffect(() => {
@@ -103,8 +103,8 @@ function Dashboard() {
     const total = convert(totalTime, "cal");
     entityTime = totalTime - activeTime;
     const entity = convert(entityTime, "cal");
-    console.log(Object.keys(data).length);
-    console.log(totalTime);
+    // console.log(Object.keys(data).length);
+    // console.log(totalTime);
     setSeconds({
       TotalTime: total,
       ActiveTime: active,
@@ -224,7 +224,7 @@ function Dashboard() {
                             justifyContent="space-evenly"
                           >
                             <Grid item xs={4} md={7}>
-                              <Autocomplete
+                              <Autocomplete required
                                 disablePortal
                                 id="combo-box-demo"
                                 options={list}
@@ -253,6 +253,64 @@ function Dashboard() {
                     </Grid>
                   </Grid>
                 </MDBox>
+                <MDBox mt={6} mb={8}>
+                <Grid container spacing={3} justifyContent="center">
+                  <Grid item xs={12} lg={8}>
+                    <Card mb={3}>
+                      <MDBox
+                        mb={7}
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <MDTypography
+                          mt={4}
+                          mb={3}
+                          variant="caption"
+                          color="error"
+                          fontWeight="regular"
+                        >
+                          <h1>* Note *</h1>
+                        </MDTypography>
+                        <Grid item xs={12} lg={9}>
+                          <MDBox
+                            display="flex"
+                            flexDirection="column"
+                            alignItems="center"
+                            justifyContent="center"
+                          >
+                            <MDTypography
+                              variant="caption"
+                              color="dark"
+                              fontSize="16px"
+                              fontWeight="regular"
+                            >
+                              <ul>
+                                <li>
+                                  <p>
+                                    Please ensure the time details are shown above successfully, in
+                                    case of any mistakes please refresh the page. If the still not
+                                    resolved please get in touch with us
+                                  </p>
+                                </li>
+                                <br />
+                                <li>
+                                  <p>Please Don't make more than one Upload. So please check all the
+                                  data are correct and then upload your data.
+                                  </p>
+                                </li>
+                                <li> <p>In case of any issuse<b> team-developers@objectways.com</b></p>
+                                  </li>
+                              </ul>
+                            </MDTypography>
+                          </MDBox>
+                        </Grid>
+                      </MDBox>
+                    </Card>
+                  </Grid>
+                </Grid>
+              </MDBox>
               </MDBox>
             </Grid>
           </Grid>
