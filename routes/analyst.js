@@ -117,5 +117,18 @@ router.route('/count').get((req,res)=>{
     .catch(err=>res.status(400).json('Error:'+err))
 })
 
+router.route('/fetch/one').get((req,res)=>{
+    const date = req.query.createdAt
+    const empId = "710"
+    Analyst.find({empId:empId,createdAt:{$gte:new Date(date)}})
+    .then(analyst=>{
+        if(analyst){
+            return res.status(404).json({emailnotfound: 'Already Your file has been submitted please try to Submit tomorrow'})
+        }
+        return null
+    })
+    .catch(err=>res.status(400).json('Error:'+err))
+})
+
 
 export default router;

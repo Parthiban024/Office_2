@@ -101,5 +101,10 @@ router.route('/users').get((req,res)=>{
     .then(user=>res.json(user))
     .catch((err)=>res.status(400).json('Error:'+err))
 })
+router.route('/all').get((req,res)=>{
+    User.find({},'empId')
+    .then(user=>res.json(user))
+    .catch((err)=>res.status(400).json('Error:'+err))
+})
 
 export default router

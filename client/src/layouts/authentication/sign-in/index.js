@@ -10,6 +10,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import man from "assets/images/man.jpg";
 import {loginUser} from 'actions/authAction';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 const Basic = function (props) {
   const [rememberMe, setRememberMe] = useState();
@@ -56,6 +57,8 @@ const Basic = function (props) {
     // console.log(err)
   },[props.errors])
 
+  const img = "https://source.unsplash.com/random/2560×1600/?Reflection"
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -67,7 +70,7 @@ const Basic = function (props) {
   };
 
   return (
-    <BasicLayout image={man}>
+    <BasicLayout image={img}>
       <Card>
         <MDBox
           variant="gradient"
