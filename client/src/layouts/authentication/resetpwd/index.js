@@ -5,6 +5,10 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
 import { useState} from "react";
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
@@ -22,6 +26,10 @@ function Reset() {
   };
   const [values, setValues] = useState(initialValues);
   const {token} = useParams()
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -44,7 +52,6 @@ function Reset() {
     .then((res)=>toast.success(res.data))
     .then(res=> window.location = '/authentication/sign-in')
     .catch(err=>toast.error(err.response.data))
-    console.log(userData);
   };
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
@@ -81,25 +88,55 @@ function Reset() {
                 />
               </MDBox>
             <MDBox mb={2}>
-                <MDInput
-                  type="password"
-                  value={values.password}
-                  onChange={handleInputChange}
-                  name="password"
-                  // helperText={err.password}
+            <MDInput
                   label="Password"
+                  variant="outlined"
+                  name="password"
+                  value={values.password}
+                  type={showPassword ? "text" : "password"}
+                  onChange={handleInputChange}
+                  // error={red}
+                  // helperText={err.password}
                   fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </MDBox>
               <MDBox mb={2}>
-                <MDInput
-                  type="password"
+              <MDInput
                   label="Confirm Password"
-                  value={values.cpassword}
-                  onChange={handleInputChange}
+                  variant="outlined"
                   name="cpassword"
+                  value={values.cpassword}
+                  type={showPassword ? "text" : "password"}
+                  onChange={handleInputChange}
+                  // error={red}
                   // helperText={err.password2}
                   fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </MDBox>
             <MDBox mt={3} mb={1}>
