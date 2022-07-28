@@ -8,7 +8,9 @@ import MDButton from "components/MDButton";
 import { useState} from "react";
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
-
+import axios from 'axios';
+import { useParams } from "react-router-dom";
+import {ToastContainer,toast} from 'react-toastify'
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
 
@@ -19,6 +21,7 @@ function Reset() {
     cpassword: "",
   };
   const [values, setValues] = useState(initialValues);
+  const {token} = useParams()
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -29,12 +32,18 @@ function Reset() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const useremail = {
+    const userData = {
       email: values.email,
       password: values.password,
-      cpassword: values.cpassword,
+      password2: values.cpassword,
+      token: token
     };
-    console.log(useremail);
+
+    axios.post('/authentication/user/reset',userData)
+    .then(()=>toast.success('Password Updated Successfully 🎉'))
+    .then((res)=>toast.success(res.data))
+    .catch(err=>toast.error(err.response.data))
+    console.log(userData);
   };
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
@@ -100,6 +109,7 @@ function Reset() {
           </MDBox>
         </MDBox>
       </Card>
+      <ToastContainer/>
     </CoverLayout>
   );
 }

@@ -91,7 +91,7 @@ function App() {
         {/* <Route exact path={"/auth"} element={<Auth/>}/> */}
         <Route exact path="/authentication/sign-in" element={<SignIn />} />
         <Route exact path="/authentication/sign-up" element={<SignUp />} />
-        <Route exact path="/authentication/resetpwd" element={<Resetpwd />} />
+        <Route exact path="/authentication/reset/:token" element={<Resetpwd />} />
         <Route exact path="/authentication/forgotpwd" element={<Forgotpwd />} />
         {/* {getRoutes(routes)} */}
         <Route element={<Protected isValid={isLoggedIn}/>}>

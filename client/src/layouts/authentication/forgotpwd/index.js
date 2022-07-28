@@ -7,8 +7,9 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import { useState} from "react";
 // Authentication layout components
+import axios from 'axios';
 import CoverLayout from "layouts/authentication/components/CoverLayout";
-
+import {ToastContainer, toast} from 'react-toastify';
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
 
@@ -30,8 +31,14 @@ function Reset() {
     const useremail = {
       email: values.email,
     };
+
+
+    axios.post('/authentication/user/forget',useremail)
+    .then(()=>toast.success("Please check your Inbox 📬"))
+    .catch(err=>toast.error(err.response.data+"😣"))
     console.log(useremail);
   };
+
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
       <Card>
@@ -62,12 +69,13 @@ function Reset() {
             </MDBox>
             <MDBox mt={6} mb={1}>
               <MDButton variant="gradient" type="submit" color="info" fullWidth>
-                reset
+                Reset
               </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
       </Card>
+      <ToastContainer/>
     </CoverLayout>
   );
 }

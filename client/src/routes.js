@@ -108,7 +108,7 @@ const routes = [
     name: "Resetpwd",
     key: "resetpwd",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/resetpwd",
+    route: "/authentication/reset/:token",
     component: <Resetpwd />,
   },
   {
@@ -116,7 +116,7 @@ const routes = [
     name: "Forgotpwd",
     key: "forgotpwd",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/forgotpwd",
+    route: "/authentication/forget",
     component: <Forgotpwd />,
   },
 ];

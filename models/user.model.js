@@ -25,7 +25,9 @@ const UserSchema =  new Schema({
       date: {
         type: Date,
         default: Date.now
-      }
+      },
+      resetToken:String,
+      expireToken:Date,
 });
 
 const User  = mongoose.model('users',UserSchema)
