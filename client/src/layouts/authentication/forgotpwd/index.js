@@ -1,6 +1,5 @@
 import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
+import { Link } from "react-router-dom";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
@@ -17,6 +16,8 @@ function Reset() {
     email: "",
   };
   const [values, setValues] = useState(initialValues);
+  const [isDisabled, setDisabled] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -29,8 +30,8 @@ function Reset() {
     e.preventDefault();
     const useremail = {
       email: values.email,
-    };
-    console.log(useremail);
+    }; setDisabled(true);
+    // console.log(useremail);
   };
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
@@ -60,10 +61,25 @@ function Reset() {
                 value={values.email}
                 onChange={handleInputChange} fullWidth />
             </MDBox>
-            <MDBox mt={6} mb={1}>
-              <MDButton variant="gradient" type="submit" color="info" fullWidth>
+            <MDBox mt={4} mb={1}>
+              <MDButton variant="gradient" type="submit" color="info"  disabled={isDisabled} fullWidth>
                 reset
               </MDButton>
+            </MDBox>
+            <MDBox mt={1} mb={1} textAlign="center">
+              <MDTypography variant="button" color="text">
+                Back to Homepage{" "}
+                <MDTypography
+                  component={Link}
+                  to="/authentication/sign-in"
+                  variant="button"
+                  color="error"
+                  fontWeight="medium"
+                  textGradient
+                >
+                  Click here
+                </MDTypography>
+              </MDTypography>
             </MDBox>
           </MDBox>
         </MDBox>

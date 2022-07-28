@@ -12,6 +12,10 @@ import Select from "@mui/material/Select";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import InputLabel from "@mui/material/InputLabel";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
 import { connect } from "react-redux";
 import { registerUser } from "actions/authAction";
 
@@ -37,6 +41,10 @@ function Cover(props) {
     emailAlready: "",
   });
   const [red, setRed] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -105,7 +113,7 @@ function Cover(props) {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Join The Force
+              Join The Force
             </MDTypography>
             <MDTypography display="block" variant="button" color="white" my={1}>
               Enter your email and password to register
@@ -124,7 +132,13 @@ function Cover(props) {
                   fullWidth
                 />
               </MDBox>
-              <MDBox mt={2} mb={2} display="flex" justifycontent="space-evenly" alignItems="center">
+              <MDBox
+                mt={2}
+                mb={2}
+                display="flex"
+                justifycontent="space-evenly"
+                alignItems="center"
+              >
                 <Grid container spacing={2}>
                   <Grid item xs={1} md={7}>
                     <MDInput
@@ -139,7 +153,9 @@ function Cover(props) {
                   <Grid item xs={1} md={3}>
                     <div>
                       <FormControl>
-                        <InputLabel htmlFor="grouped-native-select">Role</InputLabel>
+                        <InputLabel htmlFor="grouped-native-select">
+                          Role
+                        </InputLabel>
                         <Select
                           native
                           id="grouped-native-select"
@@ -177,28 +193,63 @@ function Cover(props) {
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="password"
-                  value={values.password}
-                  onChange={handleInputChange}
-                  name="password"
-                  helperText={err.password}
                   label="Password"
+                  variant="outlined"
+                  name="password"
+                  value={values.password}
+                  type={showPassword ? "text" : "password"}
+                  onChange={handleInputChange}
+                  error={red}
+                  helperText={err.password}
                   fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </MDBox>
               <MDBox mb={2}>
                 <MDInput
-                  type="password"
                   label="Confirm Password"
-                  value={values.cpassword}
-                  onChange={handleInputChange}
+                  variant="outlined"
                   name="cpassword"
+                  value={values.cpassword}
+                  type={showPassword ? "text" : "password"}
+                  onChange={handleInputChange}
+                  error={red}
                   helperText={err.password2}
                   fullWidth
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </MDBox>
               <MDBox mt={4} mb={1}>
-                <MDButton variant="gradient" type="submit" color="info" fullWidth>
+                <MDButton
+                  variant="gradient"
+                  type="submit"
+                  color="info"
+                  fullWidth
+                >
                   sign in
                 </MDButton>
               </MDBox>

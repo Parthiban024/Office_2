@@ -1,5 +1,5 @@
-import { useState , useEffect} from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 import MDBox from "components/MDBox";
@@ -8,26 +8,34 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 import man from "assets/images/man.jpg";
-import {loginUser} from 'actions/authAction';
-import {connect} from 'react-redux';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import axios from 'axios';
+import { loginUser } from "actions/authAction";
+import { connect } from "react-redux";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import axios from "axios";
 
 const Basic = function (props) {
   const [rememberMe, setRememberMe] = useState();
-  const [err,setErr] = useState({email:'',password:'',emailIncorrect:'',passwordIncorrect:''})
+  const [err, setErr] = useState({
+    email: "",
+    password: "",
+    emailIncorrect: "",
+    passwordIncorrect: "",
+  });
   const navigate = useNavigate();
   const initialValues = {
     email: "",
     password: "",
-    showPassword: false,
   };
   const [values, setValues] = useState(initialValues);
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
-  const [red,setRed] = useState(false)
+  const [red, setRed] = useState(false);
 
-
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,30 +47,33 @@ const Basic = function (props) {
     });
   };
 
-  useEffect(()=>{
-    if(props.auth.isAuthenticated){
-      navigate('/dashboard')
+  useEffect(() => {
+    if (props.auth.isAuthenticated) {
+      navigate("/dashboard");
     }
-  })
+  });
 
- useEffect(()=>{
-    if(props.errors){
+  useEffect(() => {
+    if (props.errors) {
       setErr({
-        email:props.errors.email,
+        email: props.errors.email,
         password: props.errors.password,
         emailIncorrect: props.errors.emailnotfound,
-        passwordIncorrect: props.errors.passwordinCorrect
-      })
-      
+        passwordIncorrect: props.errors.passwordinCorrect,
+      });
     }
-    if(err.email||err.emailIncorrect && err.password||err.passwordIncorrect !==''){
-      setRed(true)
+    if (
+      err.email ||
+      (err.emailIncorrect && err.password) ||
+      err.passwordIncorrect !== ""
+    ) {
+      setRed(true);
     }
     // console.log(err)
-  },[props.errors])
+  }, [props.errors]);
 
-  const img = "https://source.unsplash.com/random/2560×1600/?Nature"
-  
+  const img = "https://source.unsplash.com/random/2560×1600/?Nature";
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
@@ -87,12 +98,7 @@ const Basic = function (props) {
           mb={1}
           textAlign="center"
         >
-          <MDTypography
-            variant="h4"
-            fontWeight="medium"
-            color="white"
-            mt={1}
-          >
+          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Jump In
           </MDTypography>
         </MDBox>
@@ -105,7 +111,7 @@ const Basic = function (props) {
                 label="Email"
                 value={values.email}
                 onChange={handleInputChange}
-                helperText={err.email||err.emailIncorrect}
+                helperText={err.email || err.emailIncorrect}
                 name="email"
                 fullWidth
                 error={red}
@@ -113,43 +119,31 @@ const Basic = function (props) {
             </MDBox>
             <MDBox mb={2}>
               <MDInput
-                type="password"
                 label="Password"
-                value={values.password}
-                onChange={handleInputChange}
-                helperText={err.password||err.passwordIncorrect}
+                variant="outlined"
                 name="password"
+                value={values.password}
+                type={showPassword ? "text" : "password"}
+                onChange={handleInputChange}
                 error={red}
+                helperText={err.password || err.passwordIncorrect}
                 fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </MDBox>
-            {/* <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Remember me
-              </MDTypography>
-            </MDBox> */}
-              {/* <MDBox mt={1} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Forgot your password?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/forgotpwd"
-                  variant="button"
-                  color="error"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Click here
-                </MDTypography>
-              </MDTypography>
-            </MDBox> */}
+
             <MDBox mt={2} mb={1}>
               <MDButton variant="gradient" type="submit" color="info" fullWidth>
                 sign in
@@ -190,11 +184,11 @@ const Basic = function (props) {
       </Card>
     </BasicLayout>
   );
-}
+};
 
-const mapStateToProps = state =>({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  errors: state.error
-})
+  errors: state.error,
+});
 
-export default connect(mapStateToProps,{loginUser})(Basic);
+export default connect(mapStateToProps, { loginUser })(Basic);
