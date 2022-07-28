@@ -107,4 +107,29 @@ router.route('/all').get((req,res)=>{
     .catch((err)=>res.status(400).json('Error:'+err))
 })
 
+router.route('/reset').post((req,res)=>{
+    const newPass  = req.body.password
+    const email = req.body.email
+
+    User.findOne({email})
+    .then(user=>{
+        if(!user){
+            return res.status(404).json({emailnotfound: 'email not found'})
+        }
+        bcrypt.genSalt(10,(err,salt)=>{
+            bcrypt.hash(newPass,salt,(err,hash)=>{
+                if (err) {console.log( err);}
+                user.password = hash;
+                console.log(hash)
+                user.save()
+                .then(user=>res.json('Updated'))
+                .catch(err=>console.log(err))
+            })
+        })
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
 export default router
