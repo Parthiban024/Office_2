@@ -10,6 +10,8 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 import man from "assets/images/man.jpg";
 import {loginUser} from 'actions/authAction';
 import {connect} from 'react-redux';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
 
 const Basic = function (props) {
@@ -19,6 +21,7 @@ const Basic = function (props) {
   const initialValues = {
     email: "",
     password: "",
+    showPassword: false,
   };
   const [values, setValues] = useState(initialValues);
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
@@ -32,6 +35,7 @@ const Basic = function (props) {
     setValues({
       ...values,
       [name]: value,
+      showPassword: !values.showPassword,
     });
   };
 
@@ -89,7 +93,7 @@ const Basic = function (props) {
             color="white"
             mt={1}
           >
-            Sign in
+            Jump In
           </MDTypography>
         </MDBox>
 
@@ -131,12 +135,42 @@ const Basic = function (props) {
                 &nbsp;&nbsp;Remember me
               </MDTypography>
             </MDBox> */}
-            <MDBox mt={4} mb={1}>
+              {/* <MDBox mt={1} mb={1} textAlign="center">
+              <MDTypography variant="button" color="text">
+                Forgot your password?{" "}
+                <MDTypography
+                  component={Link}
+                  to="/authentication/forgotpwd"
+                  variant="button"
+                  color="error"
+                  fontWeight="medium"
+                  textGradient
+                >
+                  Click here
+                </MDTypography>
+              </MDTypography>
+            </MDBox> */}
+            <MDBox mt={2} mb={1}>
               <MDButton variant="gradient" type="submit" color="info" fullWidth>
                 sign in
               </MDButton>
             </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
+            <MDBox mt={1} mb={1} textAlign="center">
+              <MDTypography variant="button" color="text">
+                Forgot your password?{" "}
+                <MDTypography
+                  component={Link}
+                  to="/authentication/forgotpwd"
+                  variant="button"
+                  color="error"
+                  fontWeight="medium"
+                  textGradient
+                >
+                  Get new
+                </MDTypography>
+              </MDTypography>
+            </MDBox>
+            <MDBox mt={1} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Don&apos;t have an account?{" "}
                 <MDTypography

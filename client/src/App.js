@@ -5,6 +5,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 // import SignIn from "layouts/authentication/sign-in/SignIn";
 import SignIn from "./layouts/authentication/sign-in";
 import SignUp from "./layouts/authentication/sign-up";
+import Resetpwd from "./layouts/authentication/resetpwd";
+import Forgotpwd from "./layouts/authentication/forgotpwd";
 import Protected from "./layouts/authentication/Producted";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
@@ -89,6 +91,8 @@ function App() {
         {/* <Route exact path={"/auth"} element={<Auth/>}/> */}
         <Route exact path="/authentication/sign-in" element={<SignIn />} />
         <Route exact path="/authentication/sign-up" element={<SignUp />} />
+        <Route exact path="/authentication/resetpwd" element={<Resetpwd />} />
+        <Route exact path="/authentication/forgotpwd" element={<Forgotpwd />} />
         {/* {getRoutes(routes)} */}
         <Route element={<Protected isValid={isLoggedIn}/>}>
           <Route exact path="/dashboard" element={<Dashboard/>}/>
