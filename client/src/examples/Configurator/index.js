@@ -345,7 +345,8 @@ function Configurator() {
           <MDBox mr={1.5}>
             <MDButton
               component={Link}
-              href="mailto:team-developers@objectways.com"
+              // href="mailto:team-developers@objectways.com"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfj25WC1OHRQH6HuwBtyzTwrhP-ptO12ZzEj0cGlHxYAVsK7Q/viewform?embedded=true"
               target="_blank"
               rel="noreferrer"
               color="dark"

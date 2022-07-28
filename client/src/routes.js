@@ -7,6 +7,8 @@ import Dashboard from "layouts/dashboard";
 // import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Resetpwd from "layouts/authentication/resetpwd";
+import Forgotpwd from "layouts/authentication/forgotpwd";
 import UserReport from "layouts/UserReport";
 import AdminReport from "layouts/AdminReport";
 import Attendance from "layouts/Attendance";
@@ -100,6 +102,22 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+  },
+  {
+    type: "collapse",
+    name: "Resetpwd",
+    key: "resetpwd",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/resetpwd",
+    component: <Resetpwd />,
+  },
+  {
+    type: "collapse",
+    name: "Forgotpwd",
+    key: "forgotpwd",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/forgotpwd",
+    component: <Forgotpwd />,
   },
 ];
 
