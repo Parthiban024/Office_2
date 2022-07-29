@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // react-router-dom components
 import { useLocation, NavLink } from "react-router-dom";
@@ -11,7 +11,7 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-
+import axios from 'axios';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -37,7 +37,7 @@ function Sidenav({ color, brand, brandName, routes,roles, ...rest }) {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
-
+  const [quote,setQuote] = useState({});
   let textColor = "white";
 
   if (transparentSidenav || (whiteSidenav && !darkMode)) {
@@ -47,6 +47,16 @@ function Sidenav({ color, brand, brandName, routes,roles, ...rest }) {
   }
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
+  const quotes = () =>{
+    axios.get('https://api.quotable.io/random')
+    .then((res)=>{
+      setQuote(res.data)
+      
+    })
+  }
+  useEffect(()=>{
+    quotes();
+  },[])
 
   useEffect(() => {
     // A function that sets the mini state of the sidenav.
@@ -164,6 +174,25 @@ function Sidenav({ color, brand, brandName, routes,roles, ...rest }) {
         }
       />
       <List>{renderRoutes}</List>
+      <Divider
+        light={
+          (!darkMode && !whiteSidenav && !transparentSidenav) ||
+          (darkMode && !transparentSidenav && whiteSidenav)
+        }
+      />
+       <MDBox mt={2} textAlign="center">
+          <MDBox mb={0.5}>
+            <MDTypography color="success" variant="h4">
+              Quotes 
+            </MDTypography>
+          </MDBox></MDBox>
+          <MDBox mt={1} display="flex" flexDirection="column" textAlign="center">
+         <MDTypography sx={{whiteSpace: "pre-wrap"}} mt={1} mb={2} variant="h6"  color="text">
+            {quote.content}
+         <br/>
+           - {quote.author}
+          </MDTypography>
+        </MDBox>
       {/* <MDBox p={2} mt="auto">
         <MDButton
           component="a"

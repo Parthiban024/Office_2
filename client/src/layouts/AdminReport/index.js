@@ -204,7 +204,9 @@ function AdminReport() {
     "My Heritage Project",
     "Dragon",
     "SKY FFV",
-    "NALA",
+    "NALA 3",
+    "Napa",
+    "Pinfo",
     "SWDP",
   ];
   return (

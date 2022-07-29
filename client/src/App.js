@@ -26,7 +26,7 @@ import store from "./store";
 import AdminReport from "./layouts/AdminReport";
 import Profile from "./layouts/profile";
 import UserReport from "./layouts/UserReport";
-import Attendance from "./layouts/Attendance";
+
 
 function App() {
   const [controller] = useMaterialUIController();
@@ -97,7 +97,7 @@ function App() {
         <Route element={<Protected isValid={isLoggedIn}/>}>
           <Route exact path="/dashboard" element={<Dashboard/>}/>
           <Route exact path="/profile" element={<Profile/>}/>
-          <Route exact path="/attendance" element={<Attendance/>}/>
+          {/* <Route exact path="/attendance" element={<Attendance/>}/> */}
         </Route>
         <Route element={<Protected isValid={(isLoggedIn&&role==='admin')}/>}>
           <Route exact path="/admin-report" element={<AdminReport/>} />

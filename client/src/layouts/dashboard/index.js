@@ -7,9 +7,6 @@ import Card from "@mui/material/Card";
 import MDButton from "components/MDButton/index";
 import MDInput from "components/MDInput";
 import * as React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import MDTypography from "components/MDTypography";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import papa from "papaparse";
@@ -138,7 +135,9 @@ function Dashboard() {
     "My Heritage Project",
     "Dragon",
     "SKY FFV",
-    "NALA",
+    "NALA 3",
+    "Napa",
+    "Pinfo",
     "SWDP",
   ];
   return (
@@ -300,7 +299,8 @@ function Dashboard() {
                                   data are correct and then upload your data.
                                   </p>
                                 </li>
-                                <li> <p>In case of any issuse<b> team-developers@objectways.com</b></p>
+                                <br />
+                                <li> <p>In case of any issuse to reach us<b> team-developers@objectways.com</b></p>
                                   </li>
                               </ul>
                             </MDTypography>
