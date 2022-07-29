@@ -190,8 +190,11 @@ function Sidenav({ color, brand, brandName, routes,roles, ...rest }) {
          <MDTypography sx={{whiteSpace: "pre-wrap"}} mt={1} mb={2} variant="h6"  color="text">
             {quote.content}
          <br/>
-           - {quote.author}
+           {/* - {quote.author} */}
           </MDTypography>
+          <MDTypography color="dark" variant="h5">
+          - {quote.author}
+            </MDTypography>
         </MDBox>
       {/* <MDBox p={2} mt="auto">
         <MDButton

@@ -29,7 +29,7 @@ function Reset() {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
+  const img="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -54,7 +54,7 @@ function Reset() {
     .catch(err=>toast.error(err.response.data))
   };
   return (
-    <CoverLayout coverHeight="50vh" image={bgImage}>
+    <CoverLayout coverHeight="50vh" image={img}>
       <Card>
         <MDBox
           variant="gradient"

@@ -41,7 +41,7 @@ function Cover(props) {
     emailAlready: "",
   });
   const [red, setRed] = useState(false);
-
+ const img="https://images.unsplash.com/photo-1471734134930-fdd4b1af533e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1749&q=80"
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -99,7 +99,7 @@ function Cover(props) {
   };
   return (
     <>
-      <CoverLayout image={bgImage}>
+      <CoverLayout image={img}>
         <Card>
           <MDBox
             variant="gradient"
