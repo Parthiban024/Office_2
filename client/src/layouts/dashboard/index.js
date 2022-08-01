@@ -85,12 +85,7 @@ function Dashboard() {
       if (item.URL.match(/sagemaker\.aws\/#\/work\//gm) !== null) {
         activeTime += Number(item["Active(sec)"]);
       }
-      if (item.URL.match(/\/#Tasks/gm) !== null) {
-        activeTime += Number(item["Active(sec)"]);
-      }
-      if (item.URL.match(/\.annotell\.com\/assignment\//gm) !== null) {
-        activeTime += Number(item["Active(sec)"]);
-      }
+
       if (item.URL.match(/inAll/gm) !== null) {
         totalTime = Number(item["Active(sec)"]);
       }
@@ -101,7 +96,9 @@ function Dashboard() {
     entityTime = totalTime - activeTime;
     const entity = convert(entityTime, "cal");
     // console.log(Object.keys(data).length);
-    // console.log(totalTime);
+    console.log(totalTime);
+    console.log(activeTime);
+    console.log(entityTime);
     setSeconds({
       TotalTime: total,
       ActiveTime: active,
@@ -112,6 +109,7 @@ function Dashboard() {
       ActiveTime: activeTime,
       EntityTime: entityTime,
     });
+    
   }, [data]);
   // Team List
   const list = [
