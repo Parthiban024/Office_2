@@ -181,7 +181,7 @@ function Report() {
                 Reports
               </MDTypography>
             </MDBox>
-            <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
+            <MDBox pt={6} px={4} display="flex" justifyContent="space-evenly" alignItems="center">
               <Grid container spacing={3}>
                 <Grid item xs={2} md={3}>
                   <MDTypography variant="h6" fontWeight="medium">
@@ -219,14 +219,11 @@ function Report() {
                   />
                 </Grid>
                 <Grid item xs={2} md={3}>
-                  <MDBox pt={4}>
+                  <MDBox pt={4}  display="flex"justifyContent="end" alignItems="center">
                     <MDButton
                       variant="gradient"
                       color="success"
                       type="submit"
-                      display="flex"
-                      justifyContent="end"
-                      alignItems="center"
                       onClick={() => setShow(!show)}
                     >
                       &nbsp;Search
