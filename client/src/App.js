@@ -24,6 +24,7 @@ import Auth from "./Auth";
 import setAuthToken from "./utils/setAuthToken";
 import store from "./store";
 import AdminReport from "./layouts/AdminReport";
+import BillingReport from "./layouts/Billing-report";
 import Profile from "./layouts/profile";
 import UserReport from "./layouts/UserReport";
 
@@ -104,6 +105,8 @@ function App() {
         </Route>
         <Route element={<Protected isValid={(isLoggedIn&&role==='analyst')}/>}>
           <Route exact path="/user-report" element={<UserReport/>} />
+        </Route> <Route element={<Protected isValid={(isLoggedIn&&role==='admin')}/>}>
+          <Route exact path="/billing-report" element={<BillingReport />} />
         </Route>
         {isLoggedIn ? (
           <Route exact path="*" element={<Navigate to="/dashboard" />} />

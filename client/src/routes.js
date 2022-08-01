@@ -6,6 +6,8 @@ import Resetpwd from "layouts/authentication/resetpwd";
 import Forgotpwd from "layouts/authentication/forgotpwd";
 import UserReport from "layouts/UserReport";
 import AdminReport from "layouts/AdminReport";
+import BillingReport from "layouts/Billing-report";
+
 // import Attendance from "layouts/Attendance";
 
 // @mui icons
@@ -37,6 +39,15 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/admin-report",
     component: <AdminReport />,
+    role: "admin",
+  },
+  {
+    type: "collapse",
+    name: "BillingReport",
+    key: "billing-report",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/billing-report",
+    component: <BillingReport />,
     role: "admin",
   },
   {
