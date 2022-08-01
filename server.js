@@ -38,10 +38,13 @@ app.use(passport.initialize());
 // For Routing Purpose
 import User from './routes/user.js'
 import Analyst from './routes/analyst.js'
+import Billing from './routes/billing.js'
+import Team from './routes/team.js'
 // For Routers
 app.use('/authentication/user',User);
 app.use('/analyst',Analyst);
-
+app.use('/billing',Billing);
+app.use('/team',Team);
 
 app.use(express.static(path.join(__dirname , 'client/build')))
 app.get("*", (req, res) => {

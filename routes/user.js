@@ -108,7 +108,7 @@ router.route('/login').post((req, res) => {
 })
 
 router.route('/users').get((req, res) => {
-    User.find({}, 'name')
+    User.find({}, 'name').sort([['name',1]])
         .then(user => res.json(user))
         .catch((err) => res.status(400).json('Error:' + err))
 })
