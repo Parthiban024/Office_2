@@ -32,7 +32,7 @@ function Footer({ light }) {
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"
-            color={light ? "white" : "text"}
+            color= {light ? "white" : "text"}
             fontSize={size.sm}
           >
             &copy; {new Date().getFullYear()}, made with

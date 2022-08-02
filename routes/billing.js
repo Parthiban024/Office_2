@@ -20,11 +20,12 @@ router.route('/new').post((req,res)=>{
     .catch(err=>res.status(400).json('Error:'+err))
 })
 
-//edit Billing Data
-// router.route('/update/:id').post((req,res)=>{
-//     Billing.findById(req.params.id)
-//     .then(billing=>{
-//     })
-// })
+// edit Billing Data
+router.route('/update/:id').post((req,res)=>{
+    const data = req.body
+   Billing.findByIdAndUpdate(req.params.id,data)
+   .then(()=>res.json('Updated'))
+   .catch(err=>res.status(400).json('Error:'+err))
+})
 
 export default router

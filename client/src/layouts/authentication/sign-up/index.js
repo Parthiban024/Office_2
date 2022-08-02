@@ -19,8 +19,6 @@ import IconButton from "@mui/material/IconButton";
 import { connect } from "react-redux";
 import { registerUser } from "actions/authAction";
 
-import { ToastContainer, toast } from "react-toastify";
-
 function Cover(props) {
   const initialValues = {
     name: "",
@@ -78,7 +76,7 @@ function Cover(props) {
     ) {
       setRed(true);
     }
-    // toast.error("NO")
+    
   }, [props.errors]);
 
   // const [show, setShow] = useState(false);
@@ -95,7 +93,7 @@ function Cover(props) {
     // console.log(userData);
     props.registerUser(userData);
 
-    // toast.success("oK")
+  
   };
   return (
     <>
@@ -272,7 +270,6 @@ function Cover(props) {
           </MDBox>
         </Card>
       </CoverLayout>
-      <ToastContainer />
     </>
   );
 }

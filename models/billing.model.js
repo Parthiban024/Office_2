@@ -7,34 +7,33 @@ const billingSchema = new Schema({
     team: String,
     reportDate: Date,
     empId: String,
+    batch: String,
     reportDate: Date,
     associated:{
         annotation: Number,
         qc: Number,
         pm: Number,
-        rework: Number,
-        reworkQc: Number,
         total: Number
     },
     hours:{
         annotation: Number,
         qc: Number,
         pm: Number,
+        training: Number,
+        ojt: Number,
+        qcFeedback: Number,
         other: Number,
-        rework: Number,
-        reworkQc: Number,
         idle: Number,
-        total: Number
+        total: Number,
+        comments: String
     },
     jobs:{
         annotation: Number,
         qc: Number,
-        pm: Number,
-        other: Number,
-        rework: Number,
-        reworkQc: Number,
         total: Number
     }
+},{
+    timestamps: true
 })
 
 const Billing = mongoose.model('Billing',billingSchema)
