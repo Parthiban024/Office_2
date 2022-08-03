@@ -8,7 +8,6 @@ const billingSchema = new Schema({
     reportDate: Date,
     empId: String,
     batch: String,
-    reportDate: Date,
     associated:{
         annotation: Number,
         qc: Number,
