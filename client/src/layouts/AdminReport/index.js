@@ -35,7 +35,7 @@ function AdminReport() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setValues({
+    setValues({  
       ...values,
       [name]: value,
     });
@@ -50,6 +50,8 @@ function AdminReport() {
     })
     .catch((err)=>console.log(err));
   }
+// console.log(values.endDate)
+// console.log(empName)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,7 +61,7 @@ function AdminReport() {
       empname: empName,
       team: teamList,
     };
-    // console.log(userData);
+    console.log(userData);
 
     const sDate = values.startDate;
     const eDate = values.endDate;

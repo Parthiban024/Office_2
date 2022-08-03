@@ -18,120 +18,99 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 import TextField from "@mui/material/TextField";
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Autocomplete from "@mui/material/Autocomplete";
 // import { useSelect } from "@mui/base";
 
 function Report() {
   // const { columns, rows } = authorsTableData();
-  const initialValues = {
-    tDate: "",
-    team: "",
+ const [bill,setBill] = React.useState({
+  tDate:'',
+  team:'',
+  batch:'',
+  associated:{
+    annotation:0,
+    qc:0,
+    pmsme:0,
+    total:0,
+  },
+  hours:{
+    annotation:0,
+    qc:0,
+    pmsme:0,
+    projecttraning:0,
+    ojt:0,
+    qualityannotator:0,
+    idelhours:0,
+    other:0,
+    comments:'',
+    total:0,
+  },
+  jobs:{
+    annotation:0,
+    qc:0,
+    total:0,
+  },
+  
+    
+  });
+  // const onChange = e => {
+  //   let data = { ...bill };
+  //   let name = e.target.name;
+  //   let val = e.target.value;
+  //   if (name == 'username' || name == 'email') {
+  //     data = { ...data, [name]: val };
+  //   } else if (name == 'state' || name == 'city') {
+  //     data = {
+  //       ...data,
+  //       address: {
+  //         ...data.address,
+  //         [name]: val
+  //       }
+  //     };
+  //   } else if (name == 'lat' || name == 'long') {
+  //     data = {
+  //       ...data,
+  //       address: {
+  //         ...data.address,
+  //         geolocation: {
+  //           ...data.address.geolocation,
+  //           [name]: val
+  //         }
+  //       }
+  //     };
+  //   }
+  //   setBill(data);
+  // };
+  const submit = e => {
+    e.preventDefault();
+   
+    console.log(JSON.stringify(bill));
   };
-  const [values, setValues] = useState(initialValues);
-  const [report, setReport] = useState([]);
+  
+  // const [values, setValues] = useState({ tDate: "",team: "",batch: ""});
+  // const [report, setReport] = useState([]);
   const [teamList, setTeamList] = useState(null);
-  const empId = useSelector((state) => state.auth.user.empId);
+  // const empId = useSelector((state) => state.auth.user.empId);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setValues({
-      ...values,
+    setBill({
+      ...bill,
       [name]: value,
     });
   };
   const handleTeamChange = (event, value) => setTeamList(value);
-  const [show, setShow] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const userData = {
-      tDate: values.tDate,
-      team: teamList,
-
-    };
-    console.log(userData);
-
-    axios
-      .get(
-        `analyst/fetch/user-data/?sDate=${values.startDate}&eDate=${values.endDate}&empId=${empId}&team=${teamList}`
-      )
-      .then((res) => {
-        setReport(res.data);
-      })
-      .catch((err) => console.log(`Error:${err}`));
-  };
-
-  // tabel report
-  const columns = [
-    { field: "id", headerName: "ID", width: 80},
-    {
-      field: "name",
-      headerName: "Name",
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "team",
-      headerName: "Team",
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "date",
-      headerName: "Date",
-      // type: 'date',
-      width: 130,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "TotalTime",
-      headerName: "Active Time",
-      // type: 'time',
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "ActiveTime",
-      headerName: "Working Time",
-      // type: 'number',
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "EntityTime",
-      headerName: "Entity Time",
-      // type: 'number',
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-  ];
-
-  const rows = useMemo(
-    () =>
-      report.map((item, index) => ({
-        ...item,
-        id: index + 1,
-        name: item.name,
-        team: item.team,
-        date: moment(item.createdAt).format("DD MM YYYY"),
-        TotalTime: moment
-          .utc(moment.duration(item.TotalTime, "seconds").as("milliseconds"))
-          .format("HH:mm:ss"),
-        ActiveTime: moment
-          .utc(moment.duration(item.ActiveTime, "seconds").as("milliseconds"))
-          .format("HH:mm:ss"),
-        EntityTime: moment
-          .utc(moment.duration(item.EntityTime, "seconds").as("milliseconds"))
-          .format("HH:mm:ss"),
-      })),
-    [report]
-  );
-  // Team List
+  // const [show, setShow] = useState(false);
+  // const submit = (e) => {
+  //   e.preventDefault();
+  //   const userData = {
+  //     tDate: values.tDate,
+  //     team: teamList,
+  //     batch:values.batch,
+  //   };
+  //   console.log(userData);
+  // };
   const list = [
     "Dumbledore",
     "Gandalf",
@@ -158,538 +137,365 @@ function Report() {
     "Pinfo",
     "SWDP",
   ];
+
   return (
     <DashboardLayout>
-      <DashboardNavbar />
-      <Grid item xs={12} mt={1} mb={40}>
-        <Card>
-          <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
-            <MDBox
-              mx={2}
-              // mt={-3}
-              py={3}
-              pt={3}
-              px={2}
-              variant="gradient"
-              bgColor="info"
-              borderRadius="lg"
-              coloredShadow="info"
-            >
-              <MDTypography variant="h6" color="white">
-                Reports
-              </MDTypography>
-            </MDBox>
-            <MDBox pt={6} px={4} display="flex" >
-              <Grid container spacing={3} justifyContent="center" alignItems="center">
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                     Date
-                  </MDTypography>
-                  <MDInput
-                    type="date"
-                    name="tDate"
-                    value={values.tDate}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                    Team
-                  </MDTypography>
-                  <Autocomplete
-                    disablePortal
-                    id="combo-box-demo"
-                    options={list}
-                    onChange={handleTeamChange}
-                    sx={{ width: 200 }}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDBox pt={4} display="flex"
-                     >
-                    <MDButton
-                      variant="gradient"
-                      color="success"
-                      type="submit"
-                      
-                      onClick={() => setShow(!show)}
-                    >
-                      &nbsp;SUBMIT
-                    </MDButton>
-                  </MDBox>
-                </Grid>
-              </Grid>
-            </MDBox>
+    <DashboardNavbar />
+    <Grid item xs={12} mt={1} mb={40}>
+      <Card>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
+          <MDBox
+            mx={2}
+            // mt={-3}
+            py={3}
+            pt={3}
+            px={2}
+            variant="gradient"
+            bgColor="info"
+            borderRadius="lg"
+            coloredShadow="info"
+          >
+            <MDTypography variant="h6" color="white">
+              Reports
+            </MDTypography>
           </MDBox>
-        </Card>
-        <Grid item xs={12} mt={7}>
-        <Card>
-          <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
-            <MDBox
-              mx={2}
-              // mt={-3}
-              py={3}
-              pt={3}
-              px={2}
-              variant="gradient"
-              bgColor="info"
-              borderRadius="lg"
-              coloredShadow="info"
-            >
-              <MDTypography variant="h6" color="white">
-               Count of Associates					
-              </MDTypography>
-            </MDBox>
-            <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
-              <Grid container spacing={1}>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Annotation
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="Annotation"
-                    value={values.annotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  QC
-                  </MDTypography>
-                  <MDInput
-                     type="number"
-                    name="qc"
-                    value={values.qc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  PM + SME
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="pmsme"
-                    value={values.pmsme}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Rework Annotation
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkannotation"
-                    value={values.reworkannotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Rework QC
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkqc"
-                    value={values.reworkqc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
+          <MDBox pt={6} px={4} display="flex" >
+            <Grid container spacing={3} justifyContent="center" alignItems="center">
+              <Grid item xs={2} md={3}>
                 <MDTypography variant="h6" fontWeight="medium">
-                  Total
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="total"
-                    value={values.total}
-                    onChange={handleInputChange}
-                  />
-                
-                  {/* <MDBox pt={4} display="flex"
-                      justifyContent="end"
-                      alignItems="center">
-                    <MDButton
-                      variant="gradient"
-                      color="error"
-                      type="submit"
-                      
-                      // onClick={() => setShow(!show)}
-                    >
-                      &nbsp;Total
-                    </MDButton>
-                  </MDBox> */}
-                  {/* <MDTypography variant="h6" fontWeight="medium">
-                    Name
-                  </MDTypography>
-                  <MDInput
-                    type="text"
-                    name="empname"
-                    value={values.empname}
-                    onChange={handleInputChange}
-                  /> */}
-                </Grid>
-              </Grid>
-            </MDBox>
-            {/* <MDBox pt={3} pb={3} px={2} display="flex" justifyContent="end" alignItems="center">
-              <MDButton
-                variant="gradient"
-                color="success"
-                type="submit"
-                onClick={() => setShow(!show)}
-              >
-                &nbsp;Search
-              </MDButton>
-            </MDBox> */}
-          </MDBox>
-        </Card>
-        </Grid>
-        <Grid item xs={12} mt={7} >
-        <Card>
-          <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
-            <MDBox
-              mx={2}
-              // mt={-3}
-              py={3}
-              pt={3}
-              px={2}
-              variant="gradient"
-              bgColor="info"
-              borderRadius="lg"
-              coloredShadow="info"
-            >
-              <MDTypography variant="h6" color="white">
-              Total Hours Spent										
-              </MDTypography>
-            </MDBox>
-            <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
-              <Grid container spacing={3}>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Annotation
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="annotation"
-                    value={values.annotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  QC
-                  </MDTypography>
-                  <MDInput
-                     type="number"
-                    name="qc"
-                    value={values.qc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  PM + SME
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="pmsme"
-                    value={values.pmsme}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Other
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="other"
-                    value={values.other}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Rework Annotation
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkannotation"
-                    value={values.reworkannotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
+                   Date
+                </MDTypography>
+                 <MDInput
+                  type="date"
+                  name="tDate"
+                  value={bill.tDate}
+                  onChange={handleInputChange}
+                   />
+                  </Grid>
+              {/* </Grid> */}
+              <Grid item xs={2} md={3}>
                 <MDTypography variant="h6" fontWeight="medium">
-                Rework QC
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkqc"
-                    value={values.reworkqc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Idle Hours
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="idlehours"
-                    value={values.idlehours}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={3}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Total
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="total"
-                    value={values.total}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
+                  Team
+                </MDTypography>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={list}
+                  onChange={handleTeamChange}
+                  sx={{ width: 200 }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
               </Grid>
-            </MDBox>
-          </MDBox>
-        </Card>
-        </Grid>
-        <Grid item xs={12} mt={7} >
-        <Card>
-          <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
-            <MDBox
-              mx={2}
-              // mt={-3}
-              py={3}
-              pt={3}
-              px={2}
-              variant="gradient"
-              bgColor="info"
-              borderRadius="lg"
-              coloredShadow="info"
-            >
-              <MDTypography variant="h6" color="white">
-              Total Jobs Worked on																								
-              </MDTypography>
-            </MDBox>
-            <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
-              <Grid container spacing={1}>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Annotation
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="annotation"
-                    value={values.annotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  QC
-                  </MDTypography>
-                  <MDInput
-                     type="number"
-                    name="qc"
-                    value={values.qc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  PM + SME
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="pmsme"
-                    value={values.pmsme}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Rework Annotation
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkannotation"
-                    value={values.reworkannotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Rework QC
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkqc"
-                    value={values.reworkqc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                <MDTypography variant="h6" fontWeight="medium">
-                  Total
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="total"
-                    value={values.total}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
+              <Grid item xs={2} md={3}>
+              <MDTypography variant="h6" fontWeight="medium">
+                Batch
+                </MDTypography>
+                <MDInput
+                  type="text"
+                  name="batch"
+                  value={bill.batch}
+                  onChange={handleInputChange}
+                />
               </Grid>
-            </MDBox>
-          </MDBox>
-        </Card>
-        </Grid>
-        <Grid item xs={12} mt={7} >
-        <Card>
-          <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
-            <MDBox
-              mx={2}
-              // mt={-3}
-              py={3}
-              pt={3}
-              px={2}
-              variant="gradient"
-              bgColor="info"
-              borderRadius="lg"
-              coloredShadow="info"
-            >
-              <MDTypography variant="h6" color="white">
-              Total Batches Worked on														
-              </MDTypography>
-            </MDBox>
-            <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
-              <Grid container spacing={2}>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                   Annotation Batch
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="annotation"
-                    value={values.annotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  QC Batch
-                  </MDTypography>
-                  <MDInput
-                     type="number"
-                    name="qc"
-                    value={values.qc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  PM + SME
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="pmsme"
-                    value={values.pmsme}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Rework Annotation Batch
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkannotation"
-                    value={values.reworkannotation}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                  <MDTypography variant="h6" fontWeight="medium">
-                  Rework QC Batch
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="reworkqc"
-                    value={values.reworkqc}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-                <Grid item xs={2} md={2}>
-                <MDTypography variant="h6" fontWeight="medium">
-                  Total
-                  </MDTypography>
-                  <MDInput
-                    type="number"
-                    name="total"
-                    value={values.total}
-                    onChange={handleInputChange}
-                  />
-                </Grid>
-              </Grid>
-            </MDBox>
-            <MDBox pt={3} pb={3} px={2} display="flex" justifyContent="end" alignItems="center">
-              <MDButton
-                variant="gradient"
-                color="success"
-                type="submit"
-                onClick={() => setShow(!show)}
-              >
-                &nbsp;Submit
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </Card>
-        </Grid>
-        {show ? (
-          <MDBox pt={8}>
-            <Grid item xs={12}>
-              <Card>
-                <MDBox
-                  mx={2}
-                  mt={-3}
-                  py={3}
-                  px={2}
-                  variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="info"
-                >
-                  <MDTypography variant="h6" color="white">
-                    Reports Table
-                  </MDTypography>
-                </MDBox>
-                <MDBox pt={3}>
-                  <Box sx={{ height: 700, width: "100%", display: "flex" }}>
-                    <DataGrid
-                      rows={rows}
-                      columns={columns}
-                      pageSize={10}
-                      rowsPerPageOptions={[10]}
-                      checkboxSelection
-                      disableSelectionOnClick
-                    />
-                  </Box>
-                </MDBox>
-              </Card>
             </Grid>
           </MDBox>
-        ) : null}
+        </MDBox>
+      </Card>
+      <Grid item xs={12} mt={7}>
+      <Card>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
+          <MDBox
+            mx={2}
+            // mt={-3}
+            py={3}
+            pt={3}
+            px={2}
+            variant="gradient"
+            bgColor="info"
+            borderRadius="lg"
+            coloredShadow="info"
+          >
+            <MDTypography variant="h6" color="white">
+             Count of Associates          
+            </MDTypography>
+          </MDBox>
+          <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
+            <Grid container spacing={1}>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                Annotation
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="annotation"
+                  value={bill.associated.annotation}
+                  onChange={(e)=>setBill({associated:{annotation:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                QC
+                </MDTypography>
+                <MDInput
+                   type="number"
+                  name="qc"
+                  value={bill.associated.qc}
+                  onChange={(e)=>setBill({associated:{qc:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                PM + SME
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="pmsme"
+                  value={bill.associated.pmsme}
+                  onChange={(e)=>setBill({associated:{pmsme:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+              <MDTypography variant="h6" fontWeight="medium">
+                Total
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="total"
+                  value={bill.associated.total}
+                  onChange={(e)=>setBill({associated:{total:e.target.value}})}
+                />
+              </Grid>
+            </Grid>
+          </MDBox>
+        </MDBox>
+      </Card>
       </Grid>
-      <Footer />
-    </DashboardLayout>
-  );
+      <Grid item xs={12} mt={7} >
+      <Card>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
+          <MDBox
+            mx={2}
+            // mt={-3}
+            py={3}
+            pt={3}
+            px={2}
+            variant="gradient"
+            bgColor="info"
+            borderRadius="lg"
+            coloredShadow="info"
+          >
+            <MDTypography variant="h6" color="white">
+            Total Hours Spent                   
+            </MDTypography>
+          </MDBox>
+          <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
+            <Grid container spacing={3}>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                Annotation
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="annotation"
+                  value={bill.hours.annotation}
+                  onChange={(e)=>setBill({hours:{annotation:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                QC
+                </MDTypography>
+                <MDInput
+                   type="number"
+                  name="qc"
+                  value={bill.hours.qc}
+                  onChange={(e)=>setBill({hours:{qc:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                PM + SME
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="pmsme"
+                  value={bill.hours.pmsme}
+                  onChange={(e)=>setBill({hours:{pmsme:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                Project Traning
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="projecttraning"
+                  value={bill.hours.projecttraning}
+                  onChange={(e)=>setBill({hours:{projecttraning:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                OJT
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="ojt"
+                  value={bill.hours.ojt}
+                  onChange={(e)=>setBill({hours:{ojt:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+              <MDTypography variant="h6" fontWeight="medium">
+              Quality  Annatator
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="qualityannotator"
+                  value={bill.hours.qualityannotator}
+                  onChange={(e)=>setBill({hours:{qualityannotator:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                Idle Hours
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="idlehours"
+                  value={bill.hours.idelhours}
+                  onChange={(e)=>setBill({hours:{idelhours:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                Other
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="other"
+                  value={bill.hours.other}
+                  onChange={(e)=>setBill({hours:{other:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                Comments
+                </MDTypography>
+                <TextareaAutosize
+                aria-label="minimum height"
+                minRows={4}
+                name="comments"
+                value={bill.hours.comments}
+                onChange={(e)=>setBill({hours:{comments:e.target.value}})}
+                // placeholder="Minimum 3 rows"
+                style={{ width: 200 }}
+                />
+            
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                Total
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="total"
+                  value={bill.hours.total}
+                  onChange={(e)=>setBill({hours:{total:e.target.value}})}
+                />
+              </Grid>
+             
+            </Grid>
+          </MDBox>
+        </MDBox>
+      </Card>
+      </Grid>
+      <Grid item xs={12} mt={7} >
+      <Card>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
+          <MDBox
+            mx={2}
+            // mt={-3}
+            py={3}
+            pt={3}
+            px={2}
+            variant="gradient"
+            bgColor="info"
+            borderRadius="lg"
+            coloredShadow="info"
+          >
+            <MDTypography variant="h6" color="white">
+            Total Jobs Worked on                                
+            </MDTypography>
+          </MDBox>
+          <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
+            <Grid container spacing={2}>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                 Annotation Batch
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="annotation"
+                  value={bill.jobs.annotation}
+                  onChange={(e)=>setBill({jobs:{annotation:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+                <MDTypography variant="h6" fontWeight="medium">
+                QC Batch
+                </MDTypography>
+                <MDInput
+                   type="number"
+                  name="qc"
+                  value={bill.jobs.qc}
+                  onChange={(e)=>setBill({jobs:{qc:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={2} md={3}>
+              <MDTypography variant="h6" fontWeight="medium">
+                Total
+                </MDTypography>
+                <MDInput
+                  type="number"
+                  name="total"
+                  value={bill.jobs.total}
+                  onChange={(e)=>setBill({jobs:{total:e.target.value}})}
+                />
+              </Grid>
+              <Grid item xs={1} md={2}>
+                <MDBox
+                  pt={4}
+                  pb={3}
+                  // px={2}
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <MDButton variant="gradient" color="success" type="submit">
+                    &nbsp;Search
+                  </MDButton>
+                </MDBox>
+              </Grid>
+            </Grid>
+          </MDBox>
+          {/* <MDBox pt={3} pb={3} px={2} display="flex" justifyContent="end" alignItems="center">
+            <MDButton
+              variant="gradient"
+              color="success"
+              type="submit"
+              onClick={() => setShow(!show)}
+            >
+              &nbsp;Submit
+            </MDButton>
+          </MDBox> */}
+        </MDBox>
+      </Card>
+      </Grid>
+      
+    </Grid>
+    <Footer />
+  </DashboardLayout>
+);
 }
-
 export default Report;
