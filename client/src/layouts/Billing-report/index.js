@@ -24,115 +24,93 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 function Report() {
   // const { columns, rows } = authorsTableData();
-  const initialValues = {
-    tDate: "",
-    team: "",
+ const [bill,setBill] = React.useState({
+  tDate:'',
+  team:'',
+  batch:'',
+  associated:{
+    annotation:0,
+    qc:0,
+    pmsme:0,
+    total:0,
+  },
+  hours:{
+    annotation:0,
+    qc:0,
+    pmsme:0,
+    projecttraning:0,
+    ojt:0,
+    qualityannotator:0,
+    idelhours:0,
+    other:0,
+    comments:'',
+    total:0,
+  },
+  jobs:{
+    annotation:0,
+    qc:0,
+    total:0,
+  },
+  
+    
+  });
+  // const onChange = e => {
+  //   let data = { ...bill };
+  //   let name = e.target.name;
+  //   let val = e.target.value;
+  //   if (name == 'username' || name == 'email') {
+  //     data = { ...data, [name]: val };
+  //   } else if (name == 'state' || name == 'city') {
+  //     data = {
+  //       ...data,
+  //       address: {
+  //         ...data.address,
+  //         [name]: val
+  //       }
+  //     };
+  //   } else if (name == 'lat' || name == 'long') {
+  //     data = {
+  //       ...data,
+  //       address: {
+  //         ...data.address,
+  //         geolocation: {
+  //           ...data.address.geolocation,
+  //           [name]: val
+  //         }
+  //       }
+  //     };
+  //   }
+  //   setBill(data);
+  // };
+  const submit = e => {
+    e.preventDefault();
+   
+    console.log(JSON.stringify(bill));
   };
-  const [values, setValues] = useState(initialValues);
-  const [report, setReport] = useState([]);
+  
+  // const [values, setValues] = useState({ tDate: "",team: "",batch: ""});
+  // const [report, setReport] = useState([]);
   const [teamList, setTeamList] = useState(null);
-  const empId = useSelector((state) => state.auth.user.empId);
+  // const empId = useSelector((state) => state.auth.user.empId);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setValues({
-      ...values,
+    setBill({
+      ...bill,
       [name]: value,
     });
   };
   const handleTeamChange = (event, value) => setTeamList(value);
-  const [show, setShow] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const userData = {
-      tDate: values.tDate,
-      team: teamList,
-
-    };
-    console.log(userData);
-
-    axios
-      .get(
-        `analyst/fetch/user-data/?sDate=${values.startDate}&eDate=${values.endDate}&empId=${empId}&team=${teamList}`
-      )
-      .then((res) => {
-        setReport(res.data);
-      })
-      .catch((err) => console.log(`Error:${err}`));
-  };
-
-  // tabel report
-  const columns = [
-    { field: "id", headerName: "ID", width: 80},
-    {
-      field: "name",
-      headerName: "Name",
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "team",
-      headerName: "Team",
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "date",
-      headerName: "Date",
-      // type: 'date',
-      width: 130,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "TotalTime",
-      headerName: "Active Time",
-      // type: 'time',
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "ActiveTime",
-      headerName: "Working Time",
-      // type: 'number',
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-    {
-      field: "EntityTime",
-      headerName: "Entity Time",
-      // type: 'number',
-      width: 150,
-      editable: false,
-      flex: 1,
-    },
-  ];
-
-  const rows = useMemo(
-    () =>
-      report.map((item, index) => ({
-        ...item,
-        id: index + 1,
-        name: item.name,
-        team: item.team,
-        date: moment(item.createdAt).format("DD MM YYYY"),
-        TotalTime: moment
-          .utc(moment.duration(item.TotalTime, "seconds").as("milliseconds"))
-          .format("HH:mm:ss"),
-        ActiveTime: moment
-          .utc(moment.duration(item.ActiveTime, "seconds").as("milliseconds"))
-          .format("HH:mm:ss"),
-        EntityTime: moment
-          .utc(moment.duration(item.EntityTime, "seconds").as("milliseconds"))
-          .format("HH:mm:ss"),
-      })),
-    [report]
-  );
-  // Team List
+  // const [show, setShow] = useState(false);
+  // const submit = (e) => {
+  //   e.preventDefault();
+  //   const userData = {
+  //     tDate: values.tDate,
+  //     team: teamList,
+  //     batch:values.batch,
+  //   };
+  //   console.log(userData);
+  // };
   const list = [
     "Dumbledore",
     "Gandalf",
@@ -165,7 +143,7 @@ function Report() {
     <DashboardNavbar />
     <Grid item xs={12} mt={1} mb={40}>
       <Card>
-        <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
           <MDBox
             mx={2}
             // mt={-3}
@@ -190,7 +168,7 @@ function Report() {
                  <MDInput
                   type="date"
                   name="tDate"
-                  value={values.tDate}
+                  value={bill.tDate}
                   onChange={handleInputChange}
                    />
                   </Grid>
@@ -215,7 +193,7 @@ function Report() {
                 <MDInput
                   type="text"
                   name="batch"
-                  value={values.batch}
+                  value={bill.batch}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -225,7 +203,7 @@ function Report() {
       </Card>
       <Grid item xs={12} mt={7}>
       <Card>
-        <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
           <MDBox
             mx={2}
             // mt={-3}
@@ -249,9 +227,9 @@ function Report() {
                 </MDTypography>
                 <MDInput
                   type="number"
-                  name="Annotation"
-                  value={values.annotation}
-                  onChange={handleInputChange}
+                  name="annotation"
+                  value={bill.associated.annotation}
+                  onChange={(e)=>setBill({associated:{annotation:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -261,8 +239,8 @@ function Report() {
                 <MDInput
                    type="number"
                   name="qc"
-                  value={values.qc}
-                  onChange={handleInputChange}
+                  value={bill.associated.qc}
+                  onChange={(e)=>setBill({associated:{qc:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -272,8 +250,8 @@ function Report() {
                 <MDInput
                   type="number"
                   name="pmsme"
-                  value={values.pmsme}
-                  onChange={handleInputChange}
+                  value={bill.associated.pmsme}
+                  onChange={(e)=>setBill({associated:{pmsme:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -283,8 +261,8 @@ function Report() {
                 <MDInput
                   type="number"
                   name="total"
-                  value={values.total}
-                  onChange={handleInputChange}
+                  value={bill.associated.total}
+                  onChange={(e)=>setBill({associated:{total:e.target.value}})}
                 />
               </Grid>
             </Grid>
@@ -294,7 +272,7 @@ function Report() {
       </Grid>
       <Grid item xs={12} mt={7} >
       <Card>
-        <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
           <MDBox
             mx={2}
             // mt={-3}
@@ -319,8 +297,8 @@ function Report() {
                 <MDInput
                   type="number"
                   name="annotation"
-                  value={values.annotation}
-                  onChange={handleInputChange}
+                  value={bill.hours.annotation}
+                  onChange={(e)=>setBill({hours:{annotation:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -330,8 +308,8 @@ function Report() {
                 <MDInput
                    type="number"
                   name="qc"
-                  value={values.qc}
-                  onChange={handleInputChange}
+                  value={bill.hours.qc}
+                  onChange={(e)=>setBill({hours:{qc:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -341,8 +319,8 @@ function Report() {
                 <MDInput
                   type="number"
                   name="pmsme"
-                  value={values.pmsme}
-                  onChange={handleInputChange}
+                  value={bill.hours.pmsme}
+                  onChange={(e)=>setBill({hours:{pmsme:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -351,9 +329,9 @@ function Report() {
                 </MDTypography>
                 <MDInput
                   type="number"
-                  name="other"
-                  value={values.other}
-                  onChange={handleInputChange}
+                  name="projecttraning"
+                  value={bill.hours.projecttraning}
+                  onChange={(e)=>setBill({hours:{projecttraning:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -362,9 +340,9 @@ function Report() {
                 </MDTypography>
                 <MDInput
                   type="number"
-                  name="reworkannotation"
-                  value={values.reworkannotation}
-                  onChange={handleInputChange}
+                  name="ojt"
+                  value={bill.hours.ojt}
+                  onChange={(e)=>setBill({hours:{ojt:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -373,9 +351,9 @@ function Report() {
                 </MDTypography>
                 <MDInput
                   type="number"
-                  name="reworkqc"
-                  value={values.reworkqc}
-                  onChange={handleInputChange}
+                  name="qualityannotator"
+                  value={bill.hours.qualityannotator}
+                  onChange={(e)=>setBill({hours:{qualityannotator:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -385,8 +363,8 @@ function Report() {
                 <MDInput
                   type="number"
                   name="idlehours"
-                  value={values.idlehours}
-                  onChange={handleInputChange}
+                  value={bill.hours.idelhours}
+                  onChange={(e)=>setBill({hours:{idelhours:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -395,9 +373,9 @@ function Report() {
                 </MDTypography>
                 <MDInput
                   type="number"
-                  name="total"
-                  value={values.total}
-                  onChange={handleInputChange}
+                  name="other"
+                  value={bill.hours.other}
+                  onChange={(e)=>setBill({hours:{other:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -407,6 +385,9 @@ function Report() {
                 <TextareaAutosize
                 aria-label="minimum height"
                 minRows={4}
+                name="comments"
+                value={bill.hours.comments}
+                onChange={(e)=>setBill({hours:{comments:e.target.value}})}
                 // placeholder="Minimum 3 rows"
                 style={{ width: 200 }}
                 />
@@ -418,9 +399,9 @@ function Report() {
                 </MDTypography>
                 <MDInput
                   type="number"
-                  name="other"
-                  value={values.other}
-                  onChange={handleInputChange}
+                  name="total"
+                  value={bill.hours.total}
+                  onChange={(e)=>setBill({hours:{total:e.target.value}})}
                 />
               </Grid>
              
@@ -431,7 +412,7 @@ function Report() {
       </Grid>
       <Grid item xs={12} mt={7} >
       <Card>
-        <MDBox pb={5} component="form" role="form" onSubmit={handleSubmit}>
+        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
           <MDBox
             mx={2}
             // mt={-3}
@@ -456,8 +437,8 @@ function Report() {
                 <MDInput
                   type="number"
                   name="annotation"
-                  value={values.annotation}
-                  onChange={handleInputChange}
+                  value={bill.jobs.annotation}
+                  onChange={(e)=>setBill({jobs:{annotation:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -467,8 +448,8 @@ function Report() {
                 <MDInput
                    type="number"
                   name="qc"
-                  value={values.qc}
-                  onChange={handleInputChange}
+                  value={bill.jobs.qc}
+                  onChange={(e)=>setBill({jobs:{qc:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -478,8 +459,8 @@ function Report() {
                 <MDInput
                   type="number"
                   name="total"
-                  value={values.total}
-                  onChange={handleInputChange}
+                  value={bill.jobs.total}
+                  onChange={(e)=>setBill({jobs:{total:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={1} md={2}>
@@ -511,40 +492,7 @@ function Report() {
         </MDBox>
       </Card>
       </Grid>
-      {show ? (
-        <MDBox pt={8}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-              >
-                <MDTypography variant="h6" color="white">
-                  Reports Table
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                <Box sx={{ height: 700, width: "100%", display: "flex" }}>
-                  <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    checkboxSelection
-                    disableSelectionOnClick
-                  />
-                </Box>
-              </MDBox>
-            </Card>
-          </Grid>
-        </MDBox>
-      ) : null}
+      
     </Grid>
     <Footer />
   </DashboardLayout>
