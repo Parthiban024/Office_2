@@ -98,6 +98,7 @@ function Report() {
     setBill({
       ...bill,
       [name]: value,
+      team:teamList,
     });
   };
   const handleTeamChange = (event, value) => setTeamList(value);
@@ -159,7 +160,7 @@ function Report() {
               Reports
             </MDTypography>
           </MDBox>
-          <MDBox pt={6} px={4} display="flex" >
+          <MDBox pb={5}pt={6} px={4} display="flex" >
             <Grid container spacing={3} justifyContent="center" alignItems="center">
               <Grid item xs={2} md={3}>
                 <MDTypography variant="h6" fontWeight="medium">
@@ -199,12 +200,8 @@ function Report() {
               </Grid>
             </Grid>
           </MDBox>
-        </MDBox>
-      </Card>
-      <Grid item xs={12} mt={7}>
-      <Card>
-        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
-          <MDBox
+       
+        <MDBox
             mx={2}
             // mt={-3}
             py={3}
@@ -219,7 +216,7 @@ function Report() {
              Count of Associates          
             </MDTypography>
           </MDBox>
-          <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
+          <MDBox pb={5} pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
             <Grid container spacing={1}>
               <Grid item xs={2} md={3}>
                 <MDTypography variant="h6" fontWeight="medium">
@@ -229,7 +226,7 @@ function Report() {
                   type="number"
                   name="annotation"
                   value={bill.associated.annotation}
-                  onChange={(e)=>setBill({associated:{annotation:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated:{annotation:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -240,7 +237,7 @@ function Report() {
                    type="number"
                   name="qc"
                   value={bill.associated.qc}
-                  onChange={(e)=>setBill({associated:{qc:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated:{qc:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -251,7 +248,7 @@ function Report() {
                   type="number"
                   name="pmsme"
                   value={bill.associated.pmsme}
-                  onChange={(e)=>setBill({associated:{pmsme:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated:{pmsme:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -262,17 +259,11 @@ function Report() {
                   type="number"
                   name="total"
                   value={bill.associated.total}
-                  onChange={(e)=>setBill({associated:{total:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated:{total:e.target.value}})}
                 />
               </Grid>
             </Grid>
           </MDBox>
-        </MDBox>
-      </Card>
-      </Grid>
-      <Grid item xs={12} mt={7} >
-      <Card>
-        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
           <MDBox
             mx={2}
             // mt={-3}
@@ -288,7 +279,7 @@ function Report() {
             Total Hours Spent                   
             </MDTypography>
           </MDBox>
-          <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
+          <MDBox pb={5} pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
             <Grid container spacing={3}>
               <Grid item xs={2} md={3}>
                 <MDTypography variant="h6" fontWeight="medium">
@@ -298,7 +289,7 @@ function Report() {
                   type="number"
                   name="annotation"
                   value={bill.hours.annotation}
-                  onChange={(e)=>setBill({hours:{annotation:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{annotation:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -309,7 +300,7 @@ function Report() {
                    type="number"
                   name="qc"
                   value={bill.hours.qc}
-                  onChange={(e)=>setBill({hours:{qc:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{qc:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -320,7 +311,7 @@ function Report() {
                   type="number"
                   name="pmsme"
                   value={bill.hours.pmsme}
-                  onChange={(e)=>setBill({hours:{pmsme:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{pmsme:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -331,7 +322,7 @@ function Report() {
                   type="number"
                   name="projecttraning"
                   value={bill.hours.projecttraning}
-                  onChange={(e)=>setBill({hours:{projecttraning:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{projecttraning:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -342,7 +333,7 @@ function Report() {
                   type="number"
                   name="ojt"
                   value={bill.hours.ojt}
-                  onChange={(e)=>setBill({hours:{ojt:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{ojt:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -353,7 +344,7 @@ function Report() {
                   type="number"
                   name="qualityannotator"
                   value={bill.hours.qualityannotator}
-                  onChange={(e)=>setBill({hours:{qualityannotator:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{qualityannotator:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -364,7 +355,7 @@ function Report() {
                   type="number"
                   name="idlehours"
                   value={bill.hours.idelhours}
-                  onChange={(e)=>setBill({hours:{idelhours:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{idelhours:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -375,7 +366,7 @@ function Report() {
                   type="number"
                   name="other"
                   value={bill.hours.other}
-                  onChange={(e)=>setBill({hours:{other:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{other:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -387,7 +378,7 @@ function Report() {
                 minRows={4}
                 name="comments"
                 value={bill.hours.comments}
-                onChange={(e)=>setBill({hours:{comments:e.target.value}})}
+                onChange={(e)=>setBill({...bill,hours:{comments:e.target.value}})}
                 // placeholder="Minimum 3 rows"
                 style={{ width: 200 }}
                 />
@@ -401,18 +392,11 @@ function Report() {
                   type="number"
                   name="total"
                   value={bill.hours.total}
-                  onChange={(e)=>setBill({hours:{total:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{total:e.target.value}})}
                 />
               </Grid>
-             
             </Grid>
           </MDBox>
-        </MDBox>
-      </Card>
-      </Grid>
-      <Grid item xs={12} mt={7} >
-      <Card>
-        <MDBox pb={5} component="form" role="form" onSubmit={submit}>
           <MDBox
             mx={2}
             // mt={-3}
@@ -438,7 +422,7 @@ function Report() {
                   type="number"
                   name="annotation"
                   value={bill.jobs.annotation}
-                  onChange={(e)=>setBill({jobs:{annotation:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,jobs:{annotation:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -449,7 +433,7 @@ function Report() {
                    type="number"
                   name="qc"
                   value={bill.jobs.qc}
-                  onChange={(e)=>setBill({jobs:{qc:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,jobs:{qc:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -460,7 +444,7 @@ function Report() {
                   type="number"
                   name="total"
                   value={bill.jobs.total}
-                  onChange={(e)=>setBill({jobs:{total:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,jobs:{total:e.target.value}})}
                 />
               </Grid>
               <Grid item xs={1} md={2}>
@@ -479,21 +463,9 @@ function Report() {
               </Grid>
             </Grid>
           </MDBox>
-          {/* <MDBox pt={3} pb={3} px={2} display="flex" justifyContent="end" alignItems="center">
-            <MDButton
-              variant="gradient"
-              color="success"
-              type="submit"
-              onClick={() => setShow(!show)}
-            >
-              &nbsp;Submit
-            </MDButton>
-          </MDBox> */}
-        </MDBox>
+          </MDBox>
       </Card>
       </Grid>
-      
-    </Grid>
     <Footer />
   </DashboardLayout>
 );
