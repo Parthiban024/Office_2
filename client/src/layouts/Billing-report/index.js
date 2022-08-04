@@ -9,7 +9,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useState, useMemo } from "react";
+import { useState, useEffect} from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -20,10 +20,12 @@ import moment from "moment";
 import TextField from "@mui/material/TextField";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Autocomplete from "@mui/material/Autocomplete";
+import { number } from "prop-types";
 // import { useSelect } from "@mui/base";
 
 function Report() {
   // const { columns, rows } = authorsTableData();
+  // const [count, setCount] = useState({aTotal:"",hTotal:"",jTotal:""});
  const [bill,setBill] = React.useState({
   tDate:'',
   team:'',
@@ -54,44 +56,16 @@ function Report() {
   
     
   });
-  // const onChange = e => {
-  //   let data = { ...bill };
-  //   let name = e.target.name;
-  //   let val = e.target.value;
-  //   if (name == 'username' || name == 'email') {
-  //     data = { ...data, [name]: val };
-  //   } else if (name == 'state' || name == 'city') {
-  //     data = {
-  //       ...data,
-  //       address: {
-  //         ...data.address,
-  //         [name]: val
-  //       }
-  //     };
-  //   } else if (name == 'lat' || name == 'long') {
-  //     data = {
-  //       ...data,
-  //       address: {
-  //         ...data.address,
-  //         geolocation: {
-  //           ...data.address.geolocation,
-  //           [name]: val
-  //         }
-  //       }
-  //     };
-  //   }
-  //   setBill(data);
-  // };
+ 
   const submit = e => {
     e.preventDefault();
-   
+  //  console.log(bill.associated.annotation+bill.associated.annotation)
     console.log(JSON.stringify(bill));
   };
   
-  // const [values, setValues] = useState({ tDate: "",team: "",batch: ""});
-  // const [report, setReport] = useState([]);
+ 
   const [teamList, setTeamList] = useState(null);
-  // const empId = useSelector((state) => state.auth.user.empId);
+ 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -101,17 +75,19 @@ function Report() {
       team:teamList,
     });
   };
+ 
   const handleTeamChange = (event, value) => setTeamList(value);
-  // const [show, setShow] = useState(false);
-  // const submit = (e) => {
-  //   e.preventDefault();
-  //   const userData = {
-  //     tDate: values.tDate,
-  //     team: teamList,
-  //     batch:values.batch,
-  //   };
-  //   console.log(userData);
-  // };
+//   useEffect(() => {
+
+   
+//     setCount({
+//     ...count,
+//      aTotal:(bill.associated.annotation+bill.associated.qc+bill.associated.pmsme),
+//      hTotal:(bill.hours.annotation+bill.hours.qc+bill.hours.pmsme+bill.hours.projecttraning+bill.hours.ojt+bill.hours.qualityannotator+bill.hours.idelhours+bill.hours.other),
+//      jTotal:(bill.jobs.annotation+bill.jobs.qc)
+//     });
+//   }
+// )
   const list = [
     "Dumbledore",
     "Gandalf",
@@ -226,7 +202,7 @@ function Report() {
                   type="number"
                   name="annotation"
                   value={bill.associated.annotation}
-                  onChange={(e)=>setBill({...bill,associated:{annotation:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated: {...bill.associated,annotation:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -237,7 +213,7 @@ function Report() {
                    type="number"
                   name="qc"
                   value={bill.associated.qc}
-                  onChange={(e)=>setBill({...bill,associated:{qc:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated:{...bill.associated,qc:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -248,18 +224,20 @@ function Report() {
                   type="number"
                   name="pmsme"
                   value={bill.associated.pmsme}
-                  onChange={(e)=>setBill({...bill,associated:{pmsme:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated:{...bill.associated,pmsme:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
               <MDTypography variant="h6" fontWeight="medium">
                 Total
                 </MDTypography>
-                <MDInput
+                <MDInput disabled
                   type="number"
                   name="total"
+                  InputProps={{readOnly:true,}}
+        //  count={count}
                   value={bill.associated.total}
-                  onChange={(e)=>setBill({...bill,associated:{total:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,associated:{...bill.associated,total:Number(e.target.value)}})}
                 />
               </Grid>
             </Grid>
@@ -289,7 +267,7 @@ function Report() {
                   type="number"
                   name="annotation"
                   value={bill.hours.annotation}
-                  onChange={(e)=>setBill({...bill,hours:{annotation:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,annotation:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -300,7 +278,7 @@ function Report() {
                    type="number"
                   name="qc"
                   value={bill.hours.qc}
-                  onChange={(e)=>setBill({...bill,hours:{qc:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,qc:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -311,7 +289,7 @@ function Report() {
                   type="number"
                   name="pmsme"
                   value={bill.hours.pmsme}
-                  onChange={(e)=>setBill({...bill,hours:{pmsme:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,pmsme:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -322,7 +300,7 @@ function Report() {
                   type="number"
                   name="projecttraning"
                   value={bill.hours.projecttraning}
-                  onChange={(e)=>setBill({...bill,hours:{projecttraning:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,projecttraning:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -333,7 +311,7 @@ function Report() {
                   type="number"
                   name="ojt"
                   value={bill.hours.ojt}
-                  onChange={(e)=>setBill({...bill,hours:{ojt:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,ojt:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -344,7 +322,7 @@ function Report() {
                   type="number"
                   name="qualityannotator"
                   value={bill.hours.qualityannotator}
-                  onChange={(e)=>setBill({...bill,hours:{qualityannotator:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,qualityannotator:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -355,7 +333,7 @@ function Report() {
                   type="number"
                   name="idlehours"
                   value={bill.hours.idelhours}
-                  onChange={(e)=>setBill({...bill,hours:{idelhours:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,idelhours:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -366,7 +344,7 @@ function Report() {
                   type="number"
                   name="other"
                   value={bill.hours.other}
-                  onChange={(e)=>setBill({...bill,hours:{other:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,other:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -378,7 +356,7 @@ function Report() {
                 minRows={4}
                 name="comments"
                 value={bill.hours.comments}
-                onChange={(e)=>setBill({...bill,hours:{comments:e.target.value}})}
+                onChange={(e)=>setBill({...bill,hours:{...bill.hours,comments:e.target.value}})}
                 // placeholder="Minimum 3 rows"
                 style={{ width: 200 }}
                 />
@@ -391,8 +369,9 @@ function Report() {
                 <MDInput
                   type="number"
                   name="total"
+                  InputProps={{readOnly:true,}}
                   value={bill.hours.total}
-                  onChange={(e)=>setBill({...bill,hours:{total:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,hours:{...bill.hours,total:Number(e.target.value)}})}
                 />
               </Grid>
             </Grid>
@@ -422,7 +401,7 @@ function Report() {
                   type="number"
                   name="annotation"
                   value={bill.jobs.annotation}
-                  onChange={(e)=>setBill({...bill,jobs:{annotation:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,jobs:{...bill.jobs,annotation:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -433,7 +412,7 @@ function Report() {
                    type="number"
                   name="qc"
                   value={bill.jobs.qc}
-                  onChange={(e)=>setBill({...bill,jobs:{qc:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,jobs:{...bill.jobs,qc:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={2} md={3}>
@@ -443,8 +422,9 @@ function Report() {
                 <MDInput
                   type="number"
                   name="total"
+                  InputProps={{readOnly:true,}}
                   value={bill.jobs.total}
-                  onChange={(e)=>setBill({...bill,jobs:{total:e.target.value}})}
+                  onChange={(e)=>setBill({...bill,jobs:{...bill.jobs,total:Number(e.target.value)}})}
                 />
               </Grid>
               <Grid item xs={1} md={2}>
@@ -465,6 +445,7 @@ function Report() {
           </MDBox>
           </MDBox>
       </Card>
+   
       </Grid>
     <Footer />
   </DashboardLayout>
