@@ -97,7 +97,7 @@ export default function ColumnGroupingTable() {
         <Table>
           <TableHead sx={{display: "table-header-group !important"}}>
             <TableRow>
-            <TableCell align="center" colSpan={3}>		
+            <TableCell align="center" color='primary' colSpan={3}>		
               </TableCell>
               <TableCell align="center" colSpan={4}>
               Count of associates					

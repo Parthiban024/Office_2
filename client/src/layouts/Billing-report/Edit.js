@@ -83,7 +83,7 @@ function Edit() {
       hTotal: hourTotal,
       jTotal: jobTotal,
     });
-  }, [count]);
+  }, [bill]);
   const list = [
     "Dumbledore",
     "Gandalf",
@@ -129,7 +129,7 @@ function Edit() {
             annotation:res.data.hours.annotation,
             qc:res.data.hours.qc,
             pmsme:res.data.hours.pm,
-            projecttraining:res.data.hours.training,
+            projecttraning:res.data.hours.training,
             ojt:res.data.hours.ojt,
             qualityannotator:res.data.hours.qcFeedback,
             other:res.data.hours.other,
@@ -142,6 +142,7 @@ function Edit() {
           },
      })
      setCount({
+      ...count,
         aTotal:res.data.associated.total,
         hTotal:res.data.hours.total,
         jTotal:res.data.jobs.total,
@@ -200,7 +201,7 @@ function Edit() {
               pt={3}
               px={2}
               variant="gradient"
-              bgColor="info"
+              bgColor="success"
               borderRadius="lg"
               coloredShadow="info"
             >
@@ -262,7 +263,7 @@ function Edit() {
               pt={3}
               px={2}
               variant="gradient"
-              bgColor="info"
+              bgColor="success"
               borderRadius="lg"
               coloredShadow="info"
             >
@@ -365,7 +366,7 @@ function Edit() {
               pt={3}
               px={2}
               variant="gradient"
-              bgColor="info"
+              bgColor="success"
               borderRadius="lg"
               coloredShadow="info"
             >
@@ -567,7 +568,7 @@ function Edit() {
               pt={3}
               px={2}
               variant="gradient"
-              bgColor="info"
+              bgColor="success"
               borderRadius="lg"
               coloredShadow="info"
             >
@@ -644,7 +645,7 @@ function Edit() {
                     justifyContent="center"
                     alignItems="center"
                   >
-                    <MDButton variant="gradient" color="success" type="submit">
+                    <MDButton variant="gradient" color="warning" type="submit">
                       &nbsp;Update
                     </MDButton>
                   </MDBox>
