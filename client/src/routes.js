@@ -7,6 +7,7 @@ import Forgotpwd from "layouts/authentication/forgotpwd";
 import UserReport from "layouts/UserReport";
 import AdminReport from "layouts/AdminReport";
 import BillingReport from "layouts/Billing-report";
+import BillingTabel from "layouts/Billing-Tabel";
 import CreateTeam from "layouts/create-team";
 
 // import Attendance from "layouts/Attendance";
@@ -49,6 +50,15 @@ const routes = [
     icon: <Icon fontSize="small">trending_up</Icon>,
     route: "/billing-report",
     component: <BillingReport />,
+    role: "admin",
+  },
+  {
+    type: "collapse",
+    name: "Billing Tabel",
+    key: "billing-Tabel",
+    icon: <Icon fontSize="small">trending_up</Icon>,
+    route: "/billing-Tabel",
+    component: <BillingTabel />,
     role: "admin",
   },
   {

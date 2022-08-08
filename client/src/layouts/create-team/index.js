@@ -13,7 +13,7 @@ function Team() {
     { id: 2, title: "team2",complete: false },
     
   ]);
-  //新增項目
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title) {
