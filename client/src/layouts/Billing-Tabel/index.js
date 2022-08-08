@@ -14,6 +14,7 @@ import Footer from "examples/Footer";
 import axios from "axios";
 import moment from "moment";
 import EditIcon from '@mui/icons-material/Edit';
+import {Link} from 'react-router-dom';
 // import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -156,10 +157,10 @@ export default function ColumnGroupingTable() {
     <TableCell>{item.jobs.annotation}</TableCell>
     <TableCell>{item.jobs.qc}</TableCell>
     <TableCell>{item.jobs.total}</TableCell>
-    <TableCell>
+    <TableCell><Link to={'/billing-report/edit/'+item._id}>
     <IconButton   aria-label="edit">
     <EditIcon/>
-</IconButton>  | 
+</IconButton>  </Link>| 
     <IconButton  onClick={e => handleDelete(index,e)} color="error" aria-label="delete">
     <DeleteIcon />
 </IconButton> 

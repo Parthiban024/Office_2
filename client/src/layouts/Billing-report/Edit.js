@@ -16,13 +16,14 @@ import TextField from "@mui/material/TextField";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Autocomplete from "@mui/material/Autocomplete";
 import {ToastContainer,toast} from 'react-toastify';
+import {useParams} from 'react-router-dom';
 
 
-function Report() {
+function Edit() {
   // const { columns, rows } = authorsTableData();
   const [count, setCount] = useState({ aTotal: "", hTotal: "", jTotal: "" });
   const [bill, setBill] = useState({
-    tDate: "",
+    tDate: undefined,
     team: "",
     batch: "",
     associated: {
@@ -46,7 +47,7 @@ function Report() {
       qc: 0,
     },
   });
-
+  
   const empId = useSelector((state)=>state.auth.user.empId);
   const name = useSelector((state)=>state.auth.user.name)
 
@@ -82,7 +83,7 @@ function Report() {
       hTotal: hourTotal,
       jTotal: jobTotal,
     });
-  }, [bill]);
+  }, [count]);
   const list = [
     "Dumbledore",
     "Gandalf",
@@ -109,6 +110,46 @@ function Report() {
     "Pinfo",
     "SWDP",
   ];
+ const {id} = useParams()
+ useEffect(() => {
+  var Dates = "";
+    axios.get('/billing/'+id)
+    .then(res=>{
+      Dates = res.data.reportdate
+      setBill({
+        tDate:moment(Dates).format("YYYY-MM-DD"),
+        team:res.data.team,
+        batch:res.data.batch,
+        associated:{
+            annotation:res.data.associated.annotation,
+            qc:res.data.associated.qc,
+            pmsme:res.data.associated.pm,
+        },
+        hours:{
+            annotation:res.data.hours.annotation,
+            qc:res.data.hours.qc,
+            pmsme:res.data.hours.pm,
+            projecttraining:res.data.hours.training,
+            ojt:res.data.hours.ojt,
+            qualityannotator:res.data.hours.qcFeedback,
+            other:res.data.hours.other,
+            idelhours:res.data.hours.idle,
+            comments:res.data.hours.comments,
+          },
+          jobs:{
+            annotation:res.data.jobs.annotation,
+            qc:res.data.jobs.qc,
+          },
+     })
+     setCount({
+        aTotal:res.data.associated.total,
+        hTotal:res.data.hours.total,
+        jTotal:res.data.jobs.total,
+     }) })
+     .catch(err=>console.error(err))
+   console.log(bill.tDate)
+  },[]);
+  console.log(bill)
   const submit = (e) => {
     e.preventDefault();
     const billData = {
@@ -144,7 +185,7 @@ function Report() {
     axios.post('/billing/new',billData)
     .then((res)=>toast.success(res.data))
     .catch(err=>toast.error(err))
-  console.log(bill.tDate)
+  
   };
   return (
     <DashboardLayout>
@@ -194,6 +235,7 @@ function Report() {
                     disablePortal
                     id="combo-box-demo"
                     options={list}
+                    value={bill.team}
                     onChange={handleTeamChange}
                     sx={{ width: 200 }}
                     renderInput={(params) => <TextField {...params} />}
@@ -603,7 +645,7 @@ function Report() {
                     alignItems="center"
                   >
                     <MDButton variant="gradient" color="success" type="submit">
-                      &nbsp;Submit
+                      &nbsp;Update
                     </MDButton>
                   </MDBox>
                 </Grid>
@@ -617,4 +659,4 @@ function Report() {
     </DashboardLayout>
   );
 }
-export default Report;
+export default Edit;

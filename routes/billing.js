@@ -10,6 +10,13 @@ router.route('/').get((req,res)=>{
     .catch(err=> res.status(400).json('Error:'+err))
 })
 
+//Find by Id
+router.route('/:id').get((req,res)=>{
+    Billing.findById(req.params.id)
+    .then(billing=>res.json(billing))
+    .catch(err=> res.status(400).json('Error:'+err))
+})
+
 //Add new Billing Data 
 router.route('/new').post((req,res)=>{
     const name = req.body

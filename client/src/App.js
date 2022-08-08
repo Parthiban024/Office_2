@@ -25,6 +25,7 @@ import setAuthToken from "./utils/setAuthToken";
 import store from "./store";
 import AdminReport from "./layouts/AdminReport";
 import BillingReport from "./layouts/Billing-report";
+import Edit from "./layouts/Billing-report/Edit";
 import BillingTabel from "./layouts/Billing-Tabel";
 import CreateTeam from "./layouts/create-team";
 import Profile from "./layouts/profile";
@@ -109,14 +110,15 @@ function App() {
           <Route exact path="/user-report" element={<UserReport/>} />
         </Route> <Route element={<Protected isValid={(isLoggedIn&&role==='admin')}/>}>
           <Route exact path="/billing-report" element={<BillingReport />} />
+          <Route exact path="/billing-report/edit/:id" element={<Edit/>} />
           <Route exact path="/billing-Tabel" element={<BillingTabel />} />
           <Route exact path="/create-team" element={<CreateTeam />} />
         </Route>
-        {isLoggedIn ? (
-          <Route exact path="*" element={<Navigate to="/dashboard" />} />
+        {/* {isLoggedIn ? (
+          <Route exact path="/" element={<Navigate to="/dashboard" />} />
         ) : (
           <Route exact path="/" element={<Navigate to="/authentication/sign-in" />} />
-        )}
+        )} */}
         {/* <Route exact path={"/sign"} element={<SignIn/>}/> */}
       </Routes>
     </ThemeProvider>

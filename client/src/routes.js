@@ -9,7 +9,7 @@ import AdminReport from "layouts/AdminReport";
 import BillingReport from "layouts/Billing-report";
 import BillingTabel from "layouts/Billing-Tabel";
 import CreateTeam from "layouts/create-team";
-
+import Edit from 'layouts/Billing-report/Edit'
 // import Attendance from "layouts/Attendance";
 
 // @mui icons
@@ -52,6 +52,12 @@ const routes = [
     component: <BillingReport />,
     role: "admin",
   },
+  // {
+  //   key:"editReport",
+  //   route: "/billing-report/edit",
+  //   component: <Edit />,
+  //   role: "admin",
+  // },
   {
     type: "collapse",
     name: "Billing Tabel",
