@@ -13,7 +13,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import axios from "axios";
 import moment from "moment";
-
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const columns = [
   { id: 'date', label: 'Date', minWidth: 100 },
@@ -103,6 +104,8 @@ export default function ColumnGroupingTable() {
         <Table>
           <TableHead sx={{display: "table-header-group !important"}}>
             <TableRow>
+            <TableCell align="center" colSpan={3}>		
+              </TableCell>
               <TableCell align="center" colSpan={4}>
               Count of associates					
               </TableCell>
@@ -161,7 +164,7 @@ export default function ColumnGroupingTable() {
     <TableCell>{item.jobs.annotation}</TableCell>
     <TableCell>{item.jobs.qc}</TableCell>
     <TableCell>{item.jobs.total}</TableCell>
-    <TableCell>Edit | Delete </TableCell>
+    <TableCell><EditIcon/> | <DeleteForeverIcon/> </TableCell>
                   </TableRow>
                 );
               })}
