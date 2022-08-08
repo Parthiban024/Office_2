@@ -14,8 +14,9 @@ import Footer from "examples/Footer";
 import axios from "axios";
 import moment from "moment";
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 const columns = [
   { id: 'date', label: 'Date', minWidth: 100 },
   { id: 'team', label: 'Team', minWidth: 150 },
@@ -37,7 +38,7 @@ const columns = [
   { id: 'jannotation', label: 'Annotation', minWidth: 100 },
   { id: 'jqc', label: 'QC', minWidth: 100 },
   { id: 'jtotal', label: 'Total', minWidth: 100},
-  { id: 'action', label: 'Action', minWidth: 100 },
+  { id: 'action', label: 'Action', minWidth: 150 },
   // { id: 'jtotal', label: 'Total', minWidth: 100, format: (value) => value.toLocaleString('en-US'), },
 
   
@@ -54,18 +55,7 @@ axios.get("/billing/")
 .then((res)=>rowData[res.data])
 .catch(err=>console.log(err))
 console.log(rowData)
-// const rows = [
-//   createData("05/08/2022","dumbeldore","batch2","220", "50", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
-//   createData("06/08/2022","nala","batch2","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
-//   createData("07/08/2022","Annatol","batch2","220", "56", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
-//   createData("08/08/2022","Annatol","batch2","220", "56", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
-//   createData("09/08/2022","Annatol","batch2","220", "56", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"), 
-//   createData("10/08/2022","Annatol","batch2","220", "56", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
-//   createData("11/08/2022","Annatol","batch2","220", "56", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
-//   createData("12/08/2022","Annatol","batch2","220", "56", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
-//   createData("13/08/2022","Annatol","batch2","220", "56", "33","220", "54", "33","220", "54", "33","220", "54", "33","220", "54", "33","22","23"),
 
-// ];
 const rows = [
   rowData.map((item,index)=>{
     createData(item.reportDate,item.team,item.batch,item.associated.annotation,item.associated.qc,item.associated.pm,
@@ -94,7 +84,9 @@ export default function ColumnGroupingTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  const handleDelete = (index,e) => {
+    setData(data.filter((v, i) => i !== index));
+}
   return (
     <DashboardLayout>
     <DashboardNavbar />
@@ -164,7 +156,15 @@ export default function ColumnGroupingTable() {
     <TableCell>{item.jobs.annotation}</TableCell>
     <TableCell>{item.jobs.qc}</TableCell>
     <TableCell>{item.jobs.total}</TableCell>
-    <TableCell><EditIcon/> | <DeleteForeverIcon/> </TableCell>
+    <TableCell>
+    <IconButton   aria-label="edit">
+    <EditIcon/>
+</IconButton>  | 
+    <IconButton  onClick={e => handleDelete(index,e)} color="error" aria-label="delete">
+    <DeleteIcon />
+</IconButton> 
+{/* <button onClick={e => handleDelete(index,e)}><DeleteForeverIcon/></button> */}
+          </TableCell>
                   </TableRow>
                 );
               })}
