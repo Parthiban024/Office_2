@@ -23,7 +23,7 @@ function Edit() {
   // const { columns, rows } = authorsTableData();
   const [count, setCount] = useState({ aTotal: "", hTotal: "", jTotal: "" });
   const [bill, setBill] = useState({
-    tDate: undefined,
+    tDate: '',
     team: "",
     batch: "",
     associated: {
@@ -118,6 +118,7 @@ function Edit() {
     axios.get('/billing/'+id)
     .then(res=>{
       setBill({
+        ...bill,
         tDate:moment(res.data.reportDate).format("YYYY-MM-DD"),
         team:res.data.team,
         batch:res.data.batch,
@@ -152,9 +153,9 @@ function Edit() {
      .catch(err=>console.error(err))
    console.log(bill.tDate)
   },[]);
-  console.log(bill)
-  console.log(teamList)
-  console.log(bill.team)
+  // console.log(bill)
+  // console.log(teamList)
+  // console.log(bill.team)
 
   const submit = (e) => {
     e.preventDefault();
@@ -188,10 +189,10 @@ function Edit() {
         total:count.jTotal
       }
     }
-    axios.post('/billing/new',billData)
-    .then((res)=>toast.success(res.data))
-    .catch(err=>toast.error(err))
-  
+    // axios.post('/billing/new',billData)
+    // .then((res)=>toast.success(res.data))
+    // .catch(err=>toast.error(err))
+    console.log(billData)
   };
   return (
     <DashboardLayout>
@@ -241,6 +242,7 @@ function Edit() {
                     disablePortal
                     id="combo-box-demo"
                     options={list}
+                    isOptionEqualToValue={(list, value)=> list.value === value.value}
                     value={bill.team}
                     onChange={handleTeamChange}
                     sx={{ width: 200 }}
