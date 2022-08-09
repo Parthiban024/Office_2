@@ -55,7 +55,7 @@ const rowData = [];
 axios.get("/billing/")
 .then((res)=>rowData[res.data])
 .catch(err=>console.log(err))
-console.log(rowData)
+ console.log(rowData)
 
 const rows = [
   rowData.map((item,index)=>{

@@ -97,9 +97,9 @@ function Dashboard() {
     entityTime = totalTime - activeTime;
     const entity = convert(entityTime, "cal");
     // console.log(Object.keys(data).length);
-    console.log(totalTime);
-    console.log(activeTime);
-    console.log(entityTime);
+    // console.log(totalTime);
+    // console.log(activeTime);
+    // console.log(entityTime);
     setSeconds({
       TotalTime: total,
       ActiveTime: active,
