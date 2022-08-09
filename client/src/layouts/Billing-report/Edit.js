@@ -53,6 +53,9 @@ function Edit() {
 
   const [teamList, setTeamList] = useState(null);
 
+
+  const handleTeamChange = (event, value) => setBill({...bill,team:value});
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -63,7 +66,7 @@ function Edit() {
     });
   };
 
-  const handleTeamChange = (event, value) => setTeamList(value);
+ 
   useEffect(() => {
     var assTotal =
       bill.associated.annotation + bill.associated.qc + bill.associated.pmsme;
@@ -112,12 +115,10 @@ function Edit() {
   ];
  const {id} = useParams()
  useEffect(() => {
-  var Dates = "";
     axios.get('/billing/'+id)
     .then(res=>{
-      Dates = res.data.reportdate
       setBill({
-        tDate:moment(Dates).format("YYYY-MM-DD"),
+        tDate:moment(res.data.reportDate).format("YYYY-MM-DD"),
         team:res.data.team,
         batch:res.data.batch,
         associated:{
@@ -146,11 +147,15 @@ function Edit() {
         aTotal:res.data.associated.total,
         hTotal:res.data.hours.total,
         jTotal:res.data.jobs.total,
-     }) })
+     })
+    })
      .catch(err=>console.error(err))
    console.log(bill.tDate)
   },[]);
   console.log(bill)
+  console.log(teamList)
+  console.log(bill.team)
+
   const submit = (e) => {
     e.preventDefault();
     const billData = {

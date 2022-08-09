@@ -44,6 +44,7 @@ function Dashboard() {
   // file handling
   const handlingFileUpload = (e) => {
     const { files } = e.target;
+    setData([]);
     // console.log(files);
     // console.log(files[0]);
     papa.parse(files[0], {
@@ -231,7 +232,7 @@ function Dashboard() {
                               />
                             </Grid>
                             <Grid item xs={6}>
-                              <MDInput type="file" accept=".csv" onChange={handlingFileUpload} />
+                              <input type="file" accept={".csv"} onChange={handlingFileUpload} />
                             </Grid>
                           </MDBox>
                           <MDBox
