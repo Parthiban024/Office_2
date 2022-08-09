@@ -92,7 +92,7 @@ function App() {
       <CssBaseline />
       {isLoggedIn ? <Auth /> : ""}
       <Routes>
-        {/* <Route exact path={"/auth"} element={<Auth/>}/> */}
+        <Route exact path={"/auth"} element={<Auth/>}/>
         <Route exact path="/authentication/sign-in" element={<SignIn />} />
         <Route exact path="/authentication/sign-up" element={<SignUp />} />
         <Route exact path="/authentication/reset/:token" element={<Resetpwd />} />
@@ -114,12 +114,12 @@ function App() {
           <Route exact path="/billing-Tabel" element={<BillingTabel />} />
           <Route exact path="/create-team" element={<CreateTeam />} />
         </Route>
-        {/* {isLoggedIn ? (
-          <Route exact path="/" element={<Navigate to="/dashboard" />} />
+        {isLoggedIn ? (
+          <Route exact path="*" element={<Navigate to="/dashboard" />} />
         ) : (
           <Route exact path="/" element={<Navigate to="/authentication/sign-in" />} />
-        )} */}
-        {/* <Route exact path={"/sign"} element={<SignIn/>}/> */}
+        )}
+        <Route exact path={"/sign"} element={<SignIn/>}/>
       </Routes>
     </ThemeProvider>
   );
