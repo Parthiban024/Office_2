@@ -189,10 +189,10 @@ function Edit() {
         total:count.jTotal
       }
     }
-    // axios.post('/billing/new',billData)
-    // .then((res)=>toast.success(res.data))
-    // .catch(err=>toast.error(err))
-    console.log(billData)
+    axios.post('/billing/update/'+id,billData)
+    .then((res)=>toast.success(res.data))
+    .catch(err=>toast.error(err))
+    // console.log(billData)
   };
   return (
     <DashboardLayout>

@@ -35,4 +35,11 @@ router.route('/update/:id').post((req,res)=>{
    .catch(err=>res.status(400).json('Error:'+err))
 })
 
+//Delete Billing Data By Id
+router.route('/:id').delete((req,res)=>{
+    Billing.findByIdAndDelete(req.params.id)
+    .then(()=>res.json('Exercise Has been Deleted '))
+    .catch(err=>res.status(400).json('Error:'+err))
+})
+
 export default router

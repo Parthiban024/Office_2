@@ -85,8 +85,11 @@ export default function ColumnGroupingTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const handleDelete = (index,e) => {
-    setData(data.filter((v, i) => i !== index));
+  const handleDelete = (id) => {
+    axios.delete('/billing/'+id)
+    .then(res=>console.log(res.data))
+    .catch(err=>console.log(err))
+    setData(data.filter(el=>el._id !== id));
 }
   return (
     <DashboardLayout>
@@ -161,7 +164,7 @@ export default function ColumnGroupingTable() {
     <IconButton   aria-label="edit">
     <EditIcon/>
 </IconButton>  </Link>| 
-    <IconButton  onClick={e => handleDelete(index,e)} color="error" aria-label="delete">
+    <IconButton  onClick={e => handleDelete(item._id)} color="error" aria-label="delete">
     <DeleteIcon />
 </IconButton> 
 {/* <button onClick={e => handleDelete(index,e)}><DeleteForeverIcon/></button> */}
