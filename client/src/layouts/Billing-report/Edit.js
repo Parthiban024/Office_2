@@ -62,7 +62,7 @@ function Edit() {
     setBill({
       ...bill,
       [name]: value,
-      team: teamList,
+      // team: teamList,
     });
   };
 
