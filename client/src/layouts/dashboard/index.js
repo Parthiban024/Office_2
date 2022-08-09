@@ -19,6 +19,8 @@ import "react-toastify/dist/ReactToastify.min.css";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 
+
+
 function Dashboard() {
   const [data, setData] = useState([]);
   const [teamList, setTeamList] = useState(null);
@@ -55,7 +57,7 @@ function Dashboard() {
         return results.data;
       },
     });
-    setDisable(!disable)
+    disable?setDisable(!disable):null
   };
 
   // Upload Data
@@ -265,11 +267,11 @@ function Dashboard() {
                         <MDTypography
                           mt={4}
                           mb={3}
-                          variant="caption"
+                          variant="h3"
                           color="error"
-                          fontWeight="regular"
+                          // fontWeight="regular"
                         >
-                          <h1>* Note *</h1>
+                          * Note *
                         </MDTypography>
                         <Grid item xs={12} lg={9}>
                           <MDBox
