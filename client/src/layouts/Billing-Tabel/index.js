@@ -109,8 +109,7 @@ const initialValues = {
   team: "",
 };
 const [values, setValues] = useState(initialValues);
-// const [name, setName] = useState([]);
-// const [empName, setEmpName] = useState(null);
+
 const [teamList, setTeamList] = useState(null);
 // const [report, setReport] = useState([]);
 
@@ -125,28 +124,32 @@ const handleInputChange = (e) => {
 // const handleChange = (event, value) => setEmpName(value);
 const handleTeamChange = (event, value) => setTeamList(value);
 
-// const allReport = (e) =>{
-//   axios.get('analyst/')
-//   .then((res)=>{
-//     setReport(res.data);
-//   })
-//   .catch((err)=>console.log(err));
-// }
-// console.log(values.endDate)
-// console.log(empName)
 
 const handleSubmit = (e) => {
   e.preventDefault();
-  const userData = {
-    startDate: values.startDate,
-    endDate: values.endDate,
-    // empname: empName,
-    team: teamList,
-  };
-  console.log(userData);
 
-}
+  const sDate = values.startDate;
+  const eDate = values.endDate;
+  const  team  = teamList;
+ 
+  if(team==null){
+    axios.get('billing/fetch/date/?sDate='+sDate+'&eDate='+eDate)
+    .then((res)=>{
+      setData(res.data);
+    })
+    .catch(err=>console.log(err))
+  }else {
+    axios.get('billing/report/?sDate='+sDate+'&eDate='+eDate+'&team='+team)
+      .then((res) => {
+        // console.log(res.data);
+        setData(res.data);
+      })
+      .catch((err) => console.log(`Error:${err}`));
+  }
+};
 
+
+ 
 
 
  // Team List
