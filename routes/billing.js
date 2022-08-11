@@ -42,4 +42,25 @@ router.route('/:id').delete((req,res)=>{
     .catch(err=>res.status(400).json('Error:'+err))
 })
 
+//Find Billing Data By date 
+router.route('/fetch/date/').get((req,res)=>{
+    const sDate = new Date(req.query.sDate)
+    const eDate = new Date(req.query.eDate)
+
+    Billing.find({reportDate:{$gte:sDate,$lte:eDate}})
+    .then(billing=>res.json(billing))
+    .catch(err=>res.status(400).json('err'+err))
+})
+
+//Find Billing Data by Date & team
+router.route('/fetch/report/').get((req,res)=>{
+    const sDate = new Date(req.query.sDate)
+    const eDate = new Date(req.query.eDate)
+    const team = req.query.team
+
+    Billing.find({team:team,reportDate:{$gte:sDate,$lte:eDate}})
+    .then(billing=>res.json(billing))
+    .catch(err=>res.status(400).json('err'+err))
+})
+
 export default router
