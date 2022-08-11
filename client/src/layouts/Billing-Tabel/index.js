@@ -84,11 +84,11 @@ export default function ColumnGroupingTable() {
     setPage(newPage);
   };
 
-  React.useEffect(()=>{
-    axios.get("/billing/")
-    .then((res)=>setData(res.data))
-    .catch(err=>console.log(err))
-  },[])
+  // React.useEffect(()=>{
+  //   axios.get("/billing/")
+  //   .then((res)=>setData(res.data))
+  //   .catch(err=>console.log(err))
+  // },[])
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
@@ -139,7 +139,7 @@ const handleSubmit = (e) => {
     })
     .catch(err=>console.log(err))
   }else {
-    axios.get('billing/report/?sDate='+sDate+'&eDate='+eDate+'&team='+team)
+    axios.get('billing/fetch/report/?sDate='+sDate+'&eDate='+eDate+'&team='+team)
       .then((res) => {
         // console.log(res.data);
         setData(res.data);
@@ -147,7 +147,12 @@ const handleSubmit = (e) => {
       .catch((err) => console.log(`Error:${err}`));
   }
 };
+const allReport = (e) =>{
+  axios.get("/billing/")
+    .then((res)=>setData(res.data))
+    .catch(err=>console.log(err)) 
 
+}
 
  
 
@@ -272,7 +277,7 @@ const handleSubmit = (e) => {
               <MDButton
                 variant="gradient"
                 color="error"
-                // onClick={allReport}
+                onClick={allReport}
                 // onClick={() => setShow(!show)}
               >
                 &nbsp;Get All Report
