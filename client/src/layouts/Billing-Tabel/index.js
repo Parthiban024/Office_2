@@ -13,13 +13,22 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import axios from "axios";
 import moment from "moment";
+import Card from "@mui/material/Card";
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import MDButton from "components/MDButton";
+import MDInput from "components/MDInput";
+import { useState, useEffect, useMemo } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import EditIcon from '@mui/icons-material/Edit';
 import {Link} from 'react-router-dom';
-// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+
 const columns = [
-  { id: 'date', label: 'Date', minWidth: 100 },
+  { id: 'date', label: 'Date', minWidth: 100,headerClassName: 'bgcolor1', },
   { id: 'team', label: 'Team', minWidth: 150 },
   { id: 'batch', label: 'Batch', minWidth: 150 },
   { id: 'aannotation', label: 'Annotation', minWidth: 100 },
@@ -90,25 +99,216 @@ export default function ColumnGroupingTable() {
     .then(res=>console.log(res.data))
     .catch(err=>console.log(err))
     setData(data.filter(el=>el._id !== id));
+    
 }
+
+// card
+const initialValues = {
+  startDate: "",
+  endDate: "",
+  team: "",
+};
+const [values, setValues] = useState(initialValues);
+// const [name, setName] = useState([]);
+// const [empName, setEmpName] = useState(null);
+const [teamList, setTeamList] = useState(null);
+// const [report, setReport] = useState([]);
+
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+
+  setValues({  
+    ...values,
+    [name]: value,
+  });
+};
+// const handleChange = (event, value) => setEmpName(value);
+const handleTeamChange = (event, value) => setTeamList(value);
+
+// const allReport = (e) =>{
+//   axios.get('analyst/')
+//   .then((res)=>{
+//     setReport(res.data);
+//   })
+//   .catch((err)=>console.log(err));
+// }
+// console.log(values.endDate)
+// console.log(empName)
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const userData = {
+    startDate: values.startDate,
+    endDate: values.endDate,
+    // empname: empName,
+    team: teamList,
+  };
+  console.log(userData);
+
+}
+
+
+
+ // Team List
+ const list = [
+  "Dumbledore",
+  "Gandalf",
+  "Honeydew_Image Classification",
+  "Longon",
+  "Mango_Autonomy",
+  "Mango_Obstacles",
+  "Mango_Soybeans",
+  "Neo Segmentation",
+  "Pomelo",
+  "Rambutan_Traffic Light",
+  "Rambutan_Traffic Sign",
+  "Snorlax_Vehicle",
+  "Venusaur",
+  "LIME",
+  "SNOMED",
+  "RX-NORM",
+  "Receipt Labeling",
+  "My Heritage Project",
+  "Dragon",
+  "SKY FFV",
+  "NALA 3",
+  "Napa",
+  "Pinfo",
+  "SWDP",
+];
   return (
     <DashboardLayout>
     <DashboardNavbar />
+ 
     <Grid item xs={12} mt={1} mb={10}>
+        <Card>
+          <MDBox component="form" role="form" onSubmit={handleSubmit}>
+            <MDBox
+              mx={2}
+              // mt={-3}
+              py={3}
+              pt={3}
+              px={2}
+              variant="gradient"
+              bgColor="info"
+              borderRadius="lg"
+              coloredShadow="info"
+            >
+              <MDTypography variant="h6" color="white">
+                Reports
+              </MDTypography>
+            </MDBox>
+            <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
+              <Grid container spacing={3}>
+                {/* <Grid item xs={12} md={4}> */}
+                <Grid item xs={3} md={3}>
+                  <MDTypography variant="h6" fontWeight="medium">
+                    Start Date
+                  </MDTypography>
+                  <MDInput
+                    type="date"
+                    name="startDate"
+                    value={values.startDate}
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={3} md={3}>
+                  <MDTypography variant="h6" fontWeight="medium">
+                    End Date
+                  </MDTypography>
+                  <MDInput
+                    type="date"
+                    name="endDate"
+                    value={values.endDate}
+                    onChange={handleInputChange}
+                  />
+                </Grid>
+                <Grid item xs={1} md={3}>
+                  <MDTypography variant="h6" fontWeight="medium">
+                    Team
+                  </MDTypography>
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={list}
+                    onChange={handleTeamChange}
+                    sx={{ width: 200 }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Grid>
+                {/* <Grid item xs={1} md={2}>
+                  <MDTypography variant="h6" fontWeight="medium">
+                    Batch
+                  </MDTypography>
+                  <Autocomplete
+                    id="combo-box-demo"
+                    options={name.map((option) => option.name)}
+                    onChange={handleChange}
+                    renderInput={(params) => <TextField {...params} size="medium" />}
+                    // sx={{ width: "180px" }}
+                    sx={{ width: 200 }}
+                  />
+                </Grid> */}
+                <Grid item xs={1} md={2}>
+                  <MDBox
+                    pt={4}
+                    pb={3}
+                    // px={2}
+                    display="flex"
+                    justifyContent="end"
+                    alignItems="center"
+                  >
+                    <MDButton variant="gradient" color="success" type="submit">
+                      &nbsp;Search
+                    </MDButton>
+                  </MDBox>
+                </Grid>
+              </Grid>
+            </MDBox>
+            <MDBox pt={3} pb={3} px={2} display="flex" justifyContent="end" alignItems="center">
+              <MDButton
+                variant="gradient"
+                color="error"
+                // onClick={allReport}
+                // onClick={() => setShow(!show)}
+              >
+                &nbsp;Get All Report
+              </MDButton>
+            </MDBox>
+          </MDBox>
+        </Card>
+</Grid>
+<Grid item xs={12} mt={1} mb={10}>
     <Paper sx={{ width: '100%' }}>
-      <TableContainer sx={{ maxHeight: 740 }}>
+    <MDBox
+              mx={2}
+              // mt={-3}
+              py={3}
+              pt={3}
+              px={2}
+              variant="gradient"
+              bgColor="info"
+              borderRadius="lg"
+              coloredShadow="info"
+            >
+              <MDTypography variant="h6" color="white">
+                Project Reports
+              </MDTypography>
+            </MDBox>
+      <TableContainer sx={{ maxHeight: 740}}>
         <Table>
-          <TableHead sx={{display: "table-header-group !important"}}>
+          <TableHead sx={{display: "table-header-group !important",    }}>
             <TableRow>
-            <TableCell align="center" color='primary' colSpan={3}>		
+            <TableCell align="center" bgcolor= '#e91e63' colSpan={3}>		
+            Item
               </TableCell>
-              <TableCell align="center" colSpan={4}>
+              <TableCell align="center"  bgcolor= '#4CAF50' colSpan={4}>
               Count of associates					
               </TableCell>
-              <TableCell align="center" colSpan={10}>
+              <TableCell align="center"  bgcolor= '#EF5350' colSpan={10}>
               Total hours spent						
               </TableCell>
-              <TableCell align="center" colSpan={3}>
+              <TableCell align="center"  bgcolor= '#FFA726' colSpan={4}>
               Total jobs worked on							
               </TableCell>
             </TableRow>

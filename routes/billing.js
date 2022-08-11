@@ -5,7 +5,7 @@ import Billing from '../models/billing.model.js'
 
 //Find All Data in Billing
 router.route('/').get((req,res)=>{
-    Billing.find()
+    Billing.find().sort([["reportDate",1]])
     .then(billing=>res.json(billing))
     .catch(err=> res.status(400).json('Error:'+err))
 })

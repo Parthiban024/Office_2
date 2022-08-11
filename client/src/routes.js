@@ -8,8 +8,8 @@ import UserReport from "layouts/UserReport";
 import AdminReport from "layouts/AdminReport";
 import BillingReport from "layouts/Billing-report";
 import BillingTabel from "layouts/Billing-Tabel";
-import CreateTeam from "layouts/create-team";
-import Edit from 'layouts/Billing-report/Edit'
+// import CreateTeam from "layouts/create-team";
+// import Edit from 'layouts/Billing-report/Edit'
 // import Attendance from "layouts/Attendance";
 
 // @mui icons
@@ -23,7 +23,16 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
-    role: "open",
+    role: "analyst",
+  },
+  {
+    type: "collapse",
+    name: "Dashboard",
+    key: "billing-report",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/billing-report",
+    component: <BillingReport />,
+    role: "admin",
   },
   {
     type: "collapse",
@@ -36,22 +45,22 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "AdminReport",
+    name: "Team Report",
     key: "admin-report",
     icon: <Icon fontSize="small">switch_account</Icon>,
     route: "/admin-report",
     component: <AdminReport />,
     role: "admin",
   },
-  {
-    type: "collapse",
-    name: "BillingReport",
-    key: "billing-report",
-    icon: <Icon fontSize="small">trending_up</Icon>,
-    route: "/billing-report",
-    component: <BillingReport />,
-    role: "admin",
-  },
+  // {
+  //   type: "collapse",
+  //   name: "BillingReport",
+  //   key: "billing-report",
+  //   icon: <Icon fontSize="small">trending_up</Icon>,
+  //   route: "/billing-report",
+  //   component: <BillingReport />,
+  //   role: "admin",
+  // },
   // {
   //   key:"editReport",
   //   route: "/billing-report/edit",
@@ -60,22 +69,22 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Billing Tabel",
+    name: "Project Report",
     key: "billing-Tabel",
     icon: <Icon fontSize="small">trending_up</Icon>,
     route: "/billing-Tabel",
     component: <BillingTabel />,
     role: "admin",
   },
-  {
-    type: "collapse",
-    name: "Create Team",
-    key: "create-team",
-    icon: <Icon fontSize="small">groups</Icon>,
-    route: "/create-team",
-    component: <CreateTeam />,
-    role: "admin",
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Create Team",
+  //   key: "create-team",
+  //   icon: <Icon fontSize="small">groups</Icon>,
+  //   route: "/create-team",
+  //   component: <CreateTeam />,
+  //   role: "admin",
+  // },
   {
     type: "collapse",
     name: "Sign In",
