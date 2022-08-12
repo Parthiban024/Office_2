@@ -30,9 +30,9 @@ import TableFooter from "@mui/material/TableFooter";
 import DownloadIcon from '@mui/icons-material/Download';
 
 const columns = [
-  { id: "date", label: "Date", minWidth: 100 },
-  { id: "team", label: "Team", minWidth: 150 },
-  { id: "batch", label: "Batch", minWidth: 150 },
+  // { id: "date", label: "Date", minWidth: 100 },
+  // { id: "team", label: "Team", minWidth: 150 },
+  // { id: "batch", label: "Batch", minWidth: 150 },
   { id: "aannotation", label: "Annotation", minWidth: 100 },
   { id: "aqc", label: "QC", minWidth: 100 },
   { id: "apmsme", label: "PM + SME", minWidth: 100 },
@@ -402,8 +402,29 @@ export default function ColumnGroupingTable() {
             <Table >
               <TableHead sx={{ display: "table-header-group !important" }}>
                 <TableRow>
-                  <TableCell align="center"  colSpan={3}>
-                    
+                <TableCell
+                    align="center"
+                    // bgcolor="#E91E63"
+                    minWidth= {150} 
+                    rowSpan={2}
+                  >
+                    Date
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    // bgcolor="#E91E63"
+                    rowSpan={2}
+                  >
+                    Team
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    // width="2 rem"
+                    // bgcolor="#E91E63"
+                  //  sx={{width:"2 rem"}}
+                    rowSpan={2}
+                  >
+                    Batch
                   </TableCell>
                   <TableCell align="center" bgcolor="#4CAF50" colSpan={4}>
                     Count of associates
