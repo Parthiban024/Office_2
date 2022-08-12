@@ -26,11 +26,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import TableFooter from "@mui/material/TableFooter";
+import DownloadIcon from '@mui/icons-material/Download';
 
 const columns = [
-  // { id: "date", label: "Date", minWidth: 100, headerClassName: "bgcolor1" },
-  // { id: "team", label: "Team", minWidth: 150 },
-  // { id: "batch", label: "Batch", minWidth: 150 },
+  { id: "date", label: "Date", minWidth: 100 },
+  { id: "team", label: "Team", minWidth: 150 },
+  { id: "batch", label: "Batch", minWidth: 150 },
   { id: "aannotation", label: "Annotation", minWidth: 100 },
   { id: "aqc", label: "QC", minWidth: 100 },
   { id: "apmsme", label: "PM + SME", minWidth: 100 },
@@ -181,7 +183,6 @@ export default function ColumnGroupingTable() {
   // const handleChange = (event, value) => setEmpName(value);
   const handleTeamChange = (event, value) => setTeamList(value);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -216,10 +217,8 @@ export default function ColumnGroupingTable() {
   const allReport = (e) => {
     axios
       .get("/billing/")
-      .then((res) =>{
-        setData(res.data)})
+      .then((res) => setData(res.data))
       .catch((err) => console.log(err));
-  
   };
 
   // Team List
@@ -267,7 +266,7 @@ export default function ColumnGroupingTable() {
               coloredShadow="info"
             >
               <MDTypography variant="h6" color="white">
-              Project Reports
+                Project Reports
               </MDTypography>
             </MDBox>
             <MDBox
@@ -366,12 +365,6 @@ export default function ColumnGroupingTable() {
       <Grid item xs={12} mt={1} mb={10}>
         <Paper sx={{ width: "100%" }}>
           {/* <MDBox
-=======
-</Grid>
-<Grid item xs={12} mt={1} mb={10}>
-    <Paper sx={{ width: '100%' }}>
-    {/* <MDBox
->>>>>>> 8e61f5379cbaed146e65f3761176ce39d2f937ca
               mx={2}
               // mt={-3}
               py={3}
@@ -387,29 +380,30 @@ export default function ColumnGroupingTable() {
               </MDTypography>
             </MDBox> */}
           <TableContainer sx={{ maxHeight: 740 }}>
-            <Table>
+          <TableRow>
+                  {/* <TableCell align="center" bgcolor="#e91e63" colSpan={3}>
+                    Item
+                  </TableCell> */}
+                  <TableCell align="center"  bgcolor="#4CAF50" colSpan={4}>
+                    Count of associates : 50
+                  </TableCell>
+                  <TableCell align="center" bgcolor="#EF5350"  colSpan={10}>
+                    Total hours spent : 40
+                  </TableCell>
+                  <TableCell align="center" bgcolor="#FFA726" colSpan={4}>
+                    Total jobs worked on : 30
+                  </TableCell>
+                  <TableCell align="center"  colSpan={4}>
+                  <MDButton type="submit" color="info" > Download</MDButton>
+                
+                  </TableCell>
+          
+                </TableRow>
+            <Table >
               <TableHead sx={{ display: "table-header-group !important" }}>
                 <TableRow>
-                  <TableCell
-                    align="center"
-                    // bgcolor="#e91e63"
-                    rowSpan={2}
-                  >
-                    Date
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    // bgcolor="#e91e63"
-                    rowSpan={2}
-                  >
-                    Team
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    // bgcolor="#e91e63"
-                    rowSpan={2}
-                  >
-                    Batch
+                  <TableCell align="center"  colSpan={3}>
+                    
                   </TableCell>
                   <TableCell align="center" bgcolor="#4CAF50" colSpan={4}>
                     Count of associates
@@ -440,44 +434,6 @@ export default function ColumnGroupingTable() {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                         {/* {columns.map((column) => {
-=======
-      <TableContainer sx={{ maxHeight: 740}}>
-        <Table>
-          <TableHead sx={{display: "table-header-group !important",    }}>
-            <TableRow>
-            <TableCell align="center" bgcolor= '#e91e63' colSpan={3}>		
-            Item
-              </TableCell>
-              <TableCell align="center"  bgcolor= '#4CAF50' colSpan={4}>
-              Count of associates					
-              </TableCell>
-              <TableCell align="center"  bgcolor= '#EF5350' colSpan={10}>
-              Total hours spent						
-              </TableCell>
-              <TableCell align="center"  bgcolor= '#FFA726' colSpan={4}>
-              Total jobs worked on							
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ top: 57, minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item,index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    {/* {columns.map((column) => {
->>>>>>> 8e61f5379cbaed146e65f3761176ce39d2f937ca
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
@@ -527,17 +483,39 @@ export default function ColumnGroupingTable() {
                     );
                   })}
               </TableBody>
+             
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
+          {/* <TablePagination
+            row
+            rowsPerPageOptions={[10, 25, 100, 300]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          />  */}
+          {/* <caption  rowSpan={10}> OverAll Count of Associates Total :20 | OverAll Hours spent Total :20 | Total :20</caption> */}
+          {/* <caption>OverAll Count of Associates Total :20</caption>
+          <caption>OverAll Count of Associates Total :20</caption> */}
+           
+  
+            {/* <caption>
+          <TableCell align="center" colSpan={3}>
+          
+          </TableCell>
+          <TableCell align="center" bgcolor="#4CAF50" rowSpan={4}>
+        
+            <strong>OverAll Count of Associates Total :</strong>
+          </TableCell>
+          <TableCell align="center" bgcolor="#EF5350" colSpan={10}>
+            OverAll Hours spent Total :<strong>50</strong>
+          </TableCell>
+          <TableCell align="center" bgcolor="#FFA726" colSpan={4}>
+            OverAll Jobs worked on Total:<strong>50</strong>
+          </TableCell>
+        </caption> */}
         </Paper>
       </Grid>
       <Footer />
