@@ -252,7 +252,6 @@ export default function ColumnGroupingTable() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-
       <Grid item xs={12} mt={1} mb={10}>
         <Card>
           <MDBox component="form" role="form" onSubmit={handleSubmit}>
