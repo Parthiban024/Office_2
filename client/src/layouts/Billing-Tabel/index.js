@@ -268,7 +268,7 @@ export default function ColumnGroupingTable() {
               coloredShadow="info"
             >
               <MDTypography variant="h6" color="white">
-                Reports
+              Project Reports
               </MDTypography>
             </MDBox>
             <MDBox
@@ -367,6 +367,12 @@ export default function ColumnGroupingTable() {
       <Grid item xs={12} mt={1} mb={10}>
         <Paper sx={{ width: "100%" }}>
           {/* <MDBox
+=======
+</Grid>
+<Grid item xs={12} mt={1} mb={10}>
+    <Paper sx={{ width: '100%' }}>
+    {/* <MDBox
+>>>>>>> 8e61f5379cbaed146e65f3761176ce39d2f937ca
               mx={2}
               // mt={-3}
               py={3}
@@ -435,6 +441,44 @@ export default function ColumnGroupingTable() {
                     return (
                       <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                         {/* {columns.map((column) => {
+=======
+      <TableContainer sx={{ maxHeight: 740}}>
+        <Table>
+          <TableHead sx={{display: "table-header-group !important",    }}>
+            <TableRow>
+            <TableCell align="center" bgcolor= '#e91e63' colSpan={3}>		
+            Item
+              </TableCell>
+              <TableCell align="center"  bgcolor= '#4CAF50' colSpan={4}>
+              Count of associates					
+              </TableCell>
+              <TableCell align="center"  bgcolor= '#EF5350' colSpan={10}>
+              Total hours spent						
+              </TableCell>
+              <TableCell align="center"  bgcolor= '#FFA726' colSpan={4}>
+              Total jobs worked on							
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ top: 57, minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((item,index) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    {/* {columns.map((column) => {
+>>>>>>> 8e61f5379cbaed146e65f3761176ce39d2f937ca
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
