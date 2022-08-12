@@ -203,7 +203,7 @@ const allReport = (e) =>{
               coloredShadow="info"
             >
               <MDTypography variant="h6" color="white">
-                Reports
+              Project Reports
               </MDTypography>
             </MDBox>
             <MDBox pt={6} px={4} display="flex" justifycontent="space-evenly" alignItems="center">
@@ -288,7 +288,7 @@ const allReport = (e) =>{
 </Grid>
 <Grid item xs={12} mt={1} mb={10}>
     <Paper sx={{ width: '100%' }}>
-    <MDBox
+    {/* <MDBox
               mx={2}
               // mt={-3}
               py={3}
@@ -302,7 +302,7 @@ const allReport = (e) =>{
               <MDTypography variant="h6" color="white">
                 Project Reports
               </MDTypography>
-            </MDBox>
+            </MDBox> */}
       <TableContainer sx={{ maxHeight: 740}}>
         <Table>
           <TableHead sx={{display: "table-header-group !important",    }}>
