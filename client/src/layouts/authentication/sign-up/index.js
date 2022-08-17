@@ -122,7 +122,7 @@ function Cover(props) {
               <MDBox mb={2}>
                 <MDInput
                   type="text"
-                  label="Name"
+                  label="Full Name"
                   value={values.name}
                   onChange={handleInputChange}
                   helperText={err.name}

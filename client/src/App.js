@@ -26,7 +26,7 @@ import store from "./store";
 import AdminReport from "./layouts/AdminReport";
 import BillingReport from "./layouts/Billing-report";
 import Edit from "./layouts/Billing-report/Edit";
-import BillingTabel from "./layouts/Billing-Tabel";
+import BillingTable from "./layouts/Billing-Table";
 import CreateTeam from "./layouts/create-team";
 import Profile from "./layouts/profile";
 import UserReport from "./layouts/UserReport";
@@ -111,7 +111,7 @@ function App() {
         </Route> <Route element={<Protected isValid={(isLoggedIn&&role==='admin')}/>}>
           <Route exact path="/billing-report" element={<BillingReport />} />
           <Route exact path="/billing-report/edit/:id" element={<Edit/>} />
-          <Route exact path="/billing-Tabel" element={<BillingTabel />} />
+          <Route exact path="/billing-Table" element={<BillingTable />} />
           <Route exact path="/create-team" element={<CreateTeam />} />
         </Route>
         {isLoggedIn ? (

@@ -28,6 +28,10 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableFooter from "@mui/material/TableFooter";
 import DownloadIcon from '@mui/icons-material/Download';
+import {CSVLink} from 'react-csv';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import {ToastContainer,toast} from 'react-toastify'
+
 
 const columns = [
   // { id: "date", label: "Date", minWidth: 100 },
@@ -135,13 +139,58 @@ const rows = [
 ];
 
 export default function ColumnGroupingTable() {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [data, setData] = React.useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [data, setData] = useState([]);
+  const [total,setTotal] = useState({
+    countTotal:0,
+    hoursTotal:0,
+    jobTotal:0
+  })
+
+  const headers = [
+    {label:'Date',key:'reportDate'},
+    {label:'Team',key:'team'},
+    {label:'Batch',key:'batch'},
+    {label:'Count of Associates | Annotation',key:'associated.annotation'},
+    {label:'Count of Associates | QC',key:'associated.qc'},
+    {label:'Count of Associates | PM+SME',key:'associated.pm'},
+    {label:'Count of Associates | Total',key:'associated.total'},
+    {label:'Total Hours Spent | Annotation',key:'hours.annotation'},
+    {label:'Total Hours Spent | QC',key:'hours.qc'},
+    {label:'Total Hours Spent | PM+SME',key:'hours.pm'},
+    {label:'Total Hours Spent | Project Training',key:'hours.training'},
+    {label:'Total Hours Spent | OJT',key:'hours.ojt'},
+    {label:'Total Hours Spent | Quality Feedback',key:'hours.qcFeedback'},
+    {label:'Total Hours Spent | Other',key:'hours.other'},
+    {label:'Total Hours Spent | Idle Hours',key:'hours.idle'},
+    {label:'Total Hours Spent | Total',key:'hours.total'},
+    {label:'Total Hours Spent | Comments',key:'hours.comments'},
+    {label:'Total Jobs worked on | Annotation',key:'jobs.annotation'},
+    {label:'Total Jobs worked on | Qc',key:'jobs.qc'},
+    {label:'Total Jobs worked on | Total',key:'jobs.total'},
+  ]
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  useEffect(()=>{
+    var countTotal=0 
+    var hoursTotal =0
+    var jobTotal = 0
+    data.map((item)=>{
+      countTotal += item.associated.total
+      hoursTotal += item.hours.total
+      jobTotal += item.jobs.total
+    })
+    setTotal({
+      ...total,
+      countTotal: countTotal,
+      hoursTotal: hoursTotal,
+      jobTotal:jobTotal
+    })
+  },[data])
 
   // React.useEffect(()=>{
   //   axios.get("/billing/")
@@ -156,7 +205,7 @@ export default function ColumnGroupingTable() {
   const handleDelete = (id) => {
     axios
       .delete("/billing/" + id)
-      .then((res) => console.log(res.data))
+      .then((res) => toast.warn(res.data))
       .catch((err) => console.log(err));
     setData(data.filter((el) => el._id !== id));
   };
@@ -379,33 +428,40 @@ export default function ColumnGroupingTable() {
                 Project Reports
               </MDTypography>
             </MDBox> */}
-          <TableContainer sx={{ maxHeight: 740 }}>
+            
+          <TableContainer sx={{ maxHeight: 540 }}>
+          <Table >
+          <TableHead>
           <TableRow>
                   {/* <TableCell align="center" bgcolor="#e91e63" colSpan={3}>
                     Item
                   </TableCell> */}
                   <TableCell align="center"  bgcolor="#4CAF50" colSpan={4}>
-                    Count of associates : 50
+                   Count of Associates Total : <b>{total.countTotal}</b>
                   </TableCell>
                   <TableCell align="center" bgcolor="#EF5350"  colSpan={10}>
-                    Total hours spent : 40
+                  Total Hours Total : <b>{total.hoursTotal}</b>
                   </TableCell>
                   <TableCell align="center" bgcolor="#FFA726" colSpan={4}>
-                    Total jobs worked on : 30
+                  Jobs Total : <b>{total.jobTotal}</b>
                   </TableCell>
                   <TableCell align="center"  colSpan={4}>
-                  <MDButton type="submit" color="info" > Download</MDButton>
-                
+                  <MDButton type="submit" color="info" >  <CSVLink data={data} filename={"Billing.csv"} headers={headers} >
+                     <MDTypography variant="h6" fontWeight="light" color="white" >
+                     <SaveAltIcon/>     Download Now
+            </MDTypography></CSVLink></MDButton>
                   </TableCell>
           
                 </TableRow>
+                 </TableHead>
+                </Table >
             <Table >
               <TableHead sx={{ display: "table-header-group !important" }}>
                 <TableRow>
                 <TableCell
                     align="center"
                     // bgcolor="#E91E63"
-                    minWidth= {150} 
+                    minwidth= {150} 
                     rowSpan={2}
                   >
                     Date
@@ -441,7 +497,7 @@ export default function ColumnGroupingTable() {
                     <TableCell
                       key={column.id}
                       align={column.align}
-                      style={{ top: 57, minWidth: column.minWidth }}
+                      style={{ top: 57, minwidth: column.minwidth }}
                     >
                       {column.label}
                     </TableCell>
@@ -507,39 +563,19 @@ export default function ColumnGroupingTable() {
              
             </Table>
           </TableContainer>
-          {/* <TablePagination
-            row
-            rowsPerPageOptions={[10, 25, 100, 300]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />  */}
-          {/* <caption  rowSpan={10}> OverAll Count of Associates Total :20 | OverAll Hours spent Total :20 | Total :20</caption> */}
-          {/* <caption>OverAll Count of Associates Total :20</caption>
-          <caption>OverAll Count of Associates Total :20</caption> */}
-           
-  
-            {/* <caption>
-          <TableCell align="center" colSpan={3}>
-          
-          </TableCell>
-          <TableCell align="center" bgcolor="#4CAF50" rowSpan={4}>
-        
-            <strong>OverAll Count of Associates Total :</strong>
-          </TableCell>
-          <TableCell align="center" bgcolor="#EF5350" colSpan={10}>
-            OverAll Hours spent Total :<strong>50</strong>
-          </TableCell>
-          <TableCell align="center" bgcolor="#FFA726" colSpan={4}>
-            OverAll Jobs worked on Total:<strong>50</strong>
-          </TableCell>
-        </caption> */}
-        </Paper>
+          <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={data.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
       </Grid>
       <Footer />
+      <ToastContainer/>
     </DashboardLayout>
   );
 }

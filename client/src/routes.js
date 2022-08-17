@@ -7,7 +7,7 @@ import Forgotpwd from "layouts/authentication/forgotpwd";
 import UserReport from "layouts/UserReport";
 import AdminReport from "layouts/AdminReport";
 import BillingReport from "layouts/Billing-report";
-import BillingTabel from "layouts/Billing-Tabel";
+import BillingTable from "layouts/Billing-Table";
 // import CreateTeam from "layouts/create-team";
 // import Edit from 'layouts/Billing-report/Edit'
 // import Attendance from "layouts/Attendance";
@@ -23,17 +23,9 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
-    role: "analyst",
+    role: "open",
   },
-  {
-    type: "collapse",
-    name: "Dashboard",
-    key: "billing-report",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/billing-report",
-    component: <BillingReport />,
-    role: "admin",
-  },
+
   {
     type: "collapse",
     name: "UserReport",
@@ -50,6 +42,15 @@ const routes = [
     icon: <Icon fontSize="small">switch_account</Icon>,
     route: "/admin-report",
     component: <AdminReport />,
+    role: "admin",
+  },
+  {
+    type: "collapse",
+    name: "Billing Entry",
+    key: "billing-report",
+    icon: <Icon fontSize="small">create_new_folder</Icon>,
+    route: "/billing-report",
+    component: <BillingReport />,
     role: "admin",
   },
   // {
@@ -69,11 +70,11 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Project Report",
-    key: "billing-Tabel",
+    name: "Billing Report",
+    key: "billing-Table",
     icon: <Icon fontSize="small">trending_up</Icon>,
-    route: "/billing-Tabel",
-    component: <BillingTabel />,
+    route: "/billing-Table",
+    component: <BillingTable />,
     role: "admin",
   },
   // {

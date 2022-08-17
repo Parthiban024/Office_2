@@ -191,6 +191,7 @@ function Edit() {
     }
     axios.post('/billing/update/'+id,billData)
     .then((res)=>toast.success(res.data))
+    .then(()=>window.location = '/billing-Tabel')
     .catch(err=>toast.error(err))
     // console.log(billData)
   };
