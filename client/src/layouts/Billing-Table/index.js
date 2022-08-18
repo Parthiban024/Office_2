@@ -436,13 +436,13 @@ export default function ColumnGroupingTable() {
                   {/* <TableCell align="center" bgcolor="#e91e63" colSpan={3}>
                     Item
                   </TableCell> */}
-                  <TableCell align="center"  bgcolor="#4CAF50" colSpan={4}>
+                  <TableCell align="center"  bgcolor="#f3e5f5" colSpan={4}>
                    Count of Associates Total : <b>{total.countTotal}</b>
                   </TableCell>
-                  <TableCell align="center" bgcolor="#EF5350"  colSpan={10}>
+                  <TableCell align="center" bgcolor="#a7ffeb"  colSpan={10}>
                   Total Hours Total : <b>{total.hoursTotal}</b>
                   </TableCell>
-                  <TableCell align="center" bgcolor="#FFA726" colSpan={4}>
+                  <TableCell align="center" bgcolor="#ffe0b2" colSpan={4}>
                   Jobs Total : <b>{total.jobTotal}</b>
                   </TableCell>
                   <TableCell align="center"  colSpan={4}>
@@ -482,13 +482,13 @@ export default function ColumnGroupingTable() {
                   >
                     Batch
                   </TableCell>
-                  <TableCell align="center" bgcolor="#4CAF50" colSpan={4}>
+                  <TableCell align="center" bgcolor="#f3e5f5" colSpan={4}>
                     Count of associates
                   </TableCell>
-                  <TableCell align="center" bgcolor="#EF5350" colSpan={10}>
+                  <TableCell align="center" bgcolor="#a7ffeb" colSpan={10}>
                     Total hours spent
                   </TableCell>
-                  <TableCell align="center" bgcolor="#FFA726" colSpan={4}>
+                  <TableCell align="center" bgcolor="#ffe0b2" colSpan={4}>
                     Total jobs worked on
                   </TableCell>
                 </TableRow>
